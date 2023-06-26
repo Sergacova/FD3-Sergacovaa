@@ -1,0 +1,60 @@
+﻿﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Интернет магазин</title>
+</head>
+
+<body>
+    <div id="container"></div>
+
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+
+    <script src="goods.js"></script>
+    <link rel="stylesheet" type="text/css" href="goods.css" />
+
+    <script>
+        let sectionNameText = "Шестеренный насос Hydra-Pack";
+        let goodsArr = [{
+                vendorCode: 1,
+                name: "20C4.5X006",
+                price: 175,
+                img: "https://dimon713.ru/img/gear_pump_hydra_pack/Bezimyannij-150x150.png",
+                number: 5
+            },
+            {
+                vendorCode: 2,
+                name: "20C6.3X006",
+                price: 175,
+                img: "https://dimon713.ru/img/gear_pump_hydra_pack/Bezimyannij-150x150.png",
+                number: 5
+            },
+            {
+                vendorCode: 3,
+                name: "20C8.2X006",
+                price: 175,
+                img: "https://dimon713.ru/img/gear_pump_hydra_pack/Bezimyannij-150x150.png",
+                number: 5
+            },
+            {
+                vendorCode: 4,
+                name: "20C10X006",
+                price: 175,
+                img: "https://dimon713.ru/img/gear_pump_hydra_pack/Bezimyannij-150x150.png",
+                number: 5
+            },
+        ];
+
+        ReactDOM.render(
+            React.createElement(Goods, {
+                sectionName: sectionNameText,
+                goods: goodsArr,
+            }),
+            document.getElementById("container")
+        );
+    </script>
+</body>
+
+</html>
