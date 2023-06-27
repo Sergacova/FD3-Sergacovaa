@@ -12,4 +12,6 @@
     font-weight: bold;
     text-align: right;
     border: solid 1px grey;
+    overflow-y: auto;
+    height: 80px;
 }
