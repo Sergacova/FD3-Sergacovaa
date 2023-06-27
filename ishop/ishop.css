@@ -1,36 +1,43 @@
-h1.SHOPNAME {
+body {
+    background-color: rgb(201, 201, 201);
+}
+
+.ShopTable {
+    background-color: white;
+    border-spacing: 0 10px;
+    padding: 10px;
+    margin: auto;
+    border-collapse: collapse
+}
+
+.ShopTable .ShopCaption {
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.ShopTable .Product .productsImg img {
+    height: 100px;
+}
+
+.Product,
+.ProductsThead {
     text-align: center;
+    align-items: center;
+    box-sizing: border-box;
 }
 
-table.ALLITEMS {
-    width: 100%;
+.ShopTable td {
+    padding: 0 50px;
+    color: #669;
 }
 
-tr.tableRow {
-    border-bottom: 5px solid black;
+.ShopTable tr {
+    font-weight: normal;
+    color: #039;
+    border-bottom: 2px solid #6678b1;
+    padding: 10px 8px;
 }
 
-td.itemPhoto {
-    width: 80%;
-    text-align: center;
-    border: black 3px solid;
-}
-
-td.itemInfo {
-    border: black 3px solid;
-    padding-left: 3%;
-}
-
-p.cost {
-    border: white 3px double;
-    width: 30%;
-    text-align: center;
-    background: darkblue;
-    color: white;
-    font-size: 20px;
-    border-radius: 12px;
-}
-
-p.amount {
-    font-size: 18px;
+.ShopTable tr:hover td {
+    color: #6699ff;
 }
