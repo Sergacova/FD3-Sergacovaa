@@ -1,0 +1,16 @@
+.Filter {
+    width: 260px;
+}
+
+.Filter input {
+    margin-left: 5px;
+}
+
+.Filter .textView {
+    width: 220px;
+    height: 80px;
+    overflow-y: auto;
+    border: solid 1px grey;
+    padding: 10px;
+    margin-top: 5px;
+}
