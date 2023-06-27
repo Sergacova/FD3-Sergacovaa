@@ -11,6 +11,5 @@
     width: 30px;
     font-weight: bold;
     text-align: right;
-    overflow-y: auto;
     border: solid 1px grey;
 }
