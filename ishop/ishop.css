@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(201, 201, 201);
+    background-color: rgba(201, 201, 201, 0.011);
 }
 
 .ShopTable {
@@ -28,16 +28,16 @@ body {
 
 .ShopTable td {
     padding: 0 50px;
-    color: #669;
+    color: rgb(153, 141, 102);
 }
 
 .ShopTable tr {
     font-weight: normal;
-    color: #039;
-    border-bottom: 2px solid #6678b1;
+    color: rgb(153, 145, 0);
+    border-bottom: 2px solid #b19466;
     padding: 10px 8px;
 }
 
 .ShopTable tr:hover td {
-    color: #6699ff;
+    color: #ffd666;
 }
