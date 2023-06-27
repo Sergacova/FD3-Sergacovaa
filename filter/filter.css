@@ -8,9 +8,8 @@
 
 .Filter .textView {
     height: 80px;
+    overflow-y: auto;
     border: solid 1px grey;
     padding: 10px;
     margin-top: 5px;
-    text-align: right;
-    float: right;
 }
