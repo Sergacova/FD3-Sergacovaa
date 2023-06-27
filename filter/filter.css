@@ -7,11 +7,9 @@
 }
 
 .Filter .textView {
-    float: right;
-    width: 30px;
-    font-weight: bold;
-    text-align: right;
-    border: solid 1px grey;
-    overflow-y: auto;
     height: 80px;
+    overflow-y: auto;
+    border: solid 1px grey;
+    padding: 10px;
+    margin-top: 5px;
 }
