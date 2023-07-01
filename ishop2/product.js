@@ -1,5 +1,5 @@
-var ProductsGrid=React.createClass ( {
-    displayName: "ProductsGrid",
+var product=React.createClass ( {
+    displayName: "product",
     propTypes: {
         code: React.PropTypes.number.isRequired,
         name: React.PropTypes.string.isRequired,
