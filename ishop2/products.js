@@ -18,7 +18,7 @@ var products = React.createClass({
     },
 
   delete: function(EO) {
-    if (confirm("Вы уверены?")){
+    if (confirm("Are u sure?")){
       this.props.cbDelete(this.props.code);
     }
   },
