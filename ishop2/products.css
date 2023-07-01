@@ -28,7 +28,7 @@
 
 .Ishop .Goods .Name
 {
-  border: solid rgb(128, 128, 128) 1px;
+  border: solid rgba(128, 128, 128, 0.851) 1px;
   float: left;
   font-weight: bold;
   width: 100px;
@@ -53,7 +53,7 @@
 
 .red
 {
-    background-color: #bfa4da;
+    background-color: #aaa4da84;
     height: 26px;
 }
 .white
