@@ -28,7 +28,7 @@
 
 .Ishop .Goods .Name
 {
-  border: solid gray 1px;
+  border: solid rgb(128, 128, 128) 1px;
   float: left;
   font-weight: bold;
   width: 100px;
