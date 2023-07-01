@@ -1,46 +1,38 @@
-var product=React.createClass ( {
-    displayName: "product",
-    propTypes: {
-        code: React.PropTypes.number.isRequired,
-        name: React.PropTypes.string.isRequired,
-        price:React.PropTypes.number.isRequired,
-        url: React.PropTypes.string.isRequired,
-        quantity: React.PropTypes.number,
-        workMode: React.PropTypes.number.isRequired,
-        setectedProductCode: React.PropTypes.number,
-        cbSelected: React.PropTypes.func.isRequired,
-        
+var products = React.createClass({
+
+  displayName: 'products',
+
+  propTypes: {
+      code: React.PropTypes.number.isRequired,
+      count: React.PropTypes.any.isRequired,
+      price: React.PropTypes.any.isRequired,
+      name: React.PropTypes.string.isRequired,
+      URL: React.PropTypes.string.isRequired,
+      cbSelected: React.PropTypes.func.isRequired,
+      selectedProductCode: React.PropTypes.number,
+   },
+   
+
+   productClicked: function(EO) {
+      this.props.cbSelected(this.props.code);
     },
 
-    productClicked: function(EO) {
-      this.props.cbSelected(EO.target.this.props.code);
+  delete: function(EO) {
+    if (confirm("Вы уверены?")){
+      this.props.cbDelete(this.props.code);
+    }
   },
 
-    render: function () {
-        if (this.props.workMode===1) {
-            return React.DOM.tr ( {className: 'ISHOP2__PRODUCTLIST_PRODUCT', onClick:this.productClicked},
-                   React.DOM.td ({className:'NAME'}, this.props.name),
-                   React.DOM.td ({className:"PRICE"}, this.props.price),
-                   React.DOM.td ({ className:"URL"}, this.props.url),
-                   React.DOM.td ({ className:"QUANTITY"}, this.props.quantity),
-                   React.DOM.td ({className:"CONTROL"},
-                      React.DOM.input ({type: "button", value: "Delete" }),
-                   )
-                );
-        }
-          else {
-            return React.DOM.tr( {className:'ISHOP2__PRODUCTLIST_PRODUCT'},
-                React.DOM.td({className:'Name'},this.props.name),
-                React.DOM.td({className:'PRICE'},this.props.price),
-                React.DOM.td({className:'URL'},this.props.url),
-                React.DOM.td({className:'QUANTITY'},this.props.quantity),
-                React.DOM.td({className:'CONTROL'},this.props.control),
-                );
-            }
-        
-                                  
-                
-              },
-            
-            });
-        
+  render: function() {
+      return React.DOM.div({className:this.props.selectedProductCode==this.props.code?'red':'white',onClick:this.productClicked},
+          React.DOM.span({className:'Name'},this.props.name),
+          React.DOM.span({className:'Price'},this.props.price),
+          React.DOM.span({className:'URL'},this.props.URL),
+          React.DOM.span({className:'Count'},this.props.count),
+          this.props.control
+          ?React.DOM.span({className:'Control'},this.props.control)
+          :React.DOM.span({className:'Control'},React.DOM.input({type:'button',value:'Delete',onClick:this.delete}))
+        );
+  },
+
+});
