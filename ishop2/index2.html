@@ -32,3 +32,55 @@ index.html
 </script>
 </body>
 </html>
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <meta charset="utf-8" />
+  <title>ishop2</title>
+</head> 
+<body> 
+  <div id="container"></div> 
+      
+  <script src="https://unpkg.com/react@15/dist/react.js"></script> 
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script> 
+      
+  <script src="ishop2.js"></script>
+  <script src="ProductsGrid.js"></script>
+  <link rel="stylesheet" type="text/css" href="ishop2.css" />
+
+  <script> 
+    var headTable= [{code:0, text1:"Name", text2:"Price", text3:"URL",text4:"QUANTITY", text5: "CONTROL"}];
+    var productsList=[
+        { 
+         name:"product_1",  
+         code:1, 
+         price: 22, 
+         url: 'https://img.e-dostavka.by/UserFiles/images/catalog/Goods/3033/00093033/norm/thumbs/00093033.n_1_190x190@2x.png.jpg', 
+         quantity: 10 
+        },
+       
+        { 
+         name:"product_2",  
+         code:2, 
+         price: 18, 
+         url: 'https://img.e-dostavka.by/UserFiles/images/catalog/Goods/1602/00001602/norm/thumbs/00001602.n_1_190x190@2x.png.jpg', 
+         quantity: 15 
+        },
+
+        { 
+         name:"product_3",  
+         code:3, 
+         price: 30, 
+         url: 'https://img.e-dostavka.by/UserFiles/images/catalog/Goods/7050/00077050/norm/thumbs/00077050.n_1_190x190@2x.png.jpg?09022021', 
+         quantity: 5 
+        },
+    ];
+
+    ReactDOM.render (
+        React.createElement( ishop2,{head: headTable, products:productsList,  workMode:1}),
+        document.getElementById('container')
+    );
+
+    </script>
+</body>
+</html>
