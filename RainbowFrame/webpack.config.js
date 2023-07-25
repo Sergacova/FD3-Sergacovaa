@@ -1,8 +1,8 @@
 const path = require('path');
 
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const extractCSS = new MiniCssExtractPlugin({
+const extractCSS = new ExtractTextPlugin({
     filename: "bundle.css"
 });
 
