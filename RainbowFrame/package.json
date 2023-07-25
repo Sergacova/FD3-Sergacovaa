@@ -13,6 +13,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
     "http-server": "^14.1.1",
     "lite-server": "^2.6.1",
     "mini-css-extract-plugin": "^2.7.6",
