@@ -1,0 +1,32 @@
+{
+  "name": "rainbowframehoc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": ".\\node_modules\\.bin\\webpack",
+    "start": ".\\node_modules\\.bin\\lite-server",
+    "livebuild": ".\\node_modules\\.bin\\webpack-dev-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.10",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^9.1.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "lite-server": "^2.6.1",
+    "mini-css-extract-plugin": "^2.7.6",
+    "webpack": "^5.88.2",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
