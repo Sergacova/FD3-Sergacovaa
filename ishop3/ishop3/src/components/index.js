@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './src/App.jsx';
+import App from './src/data/App.jsx';
 
 const productsArr = require('./src/data/products.json');
 const shopName = 'ISHOP3';
