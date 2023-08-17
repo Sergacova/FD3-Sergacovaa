@@ -1,6 +1,6 @@
 import './Shop.css';
 import React from 'react';
-import Product from './Elements/Product.jsx';
+import Product from './Shop/product.jsx';
 import PropTypes from 'prop-types';
 
 
