@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 
 import MobileCompany from './components/MobileCompany/MobileCompany';
 
-let companyName = 'A1';
 let clientsArr = [
   { id: 101, FIO: { fam: "Иванов", im: "Иван", otch: "Иванович" }, balance: 200 },
   { id: 105, FIO: { fam: "Сидоров", im: "Сидор", otch: "Сидорович" }, balance: 250 },
@@ -15,7 +14,6 @@ let clientsArr = [
 
 ReactDOM.render(
   <MobileCompany
-    name={companyName}
     clients={clientsArr}
   />
   , document.getElementById('container')
