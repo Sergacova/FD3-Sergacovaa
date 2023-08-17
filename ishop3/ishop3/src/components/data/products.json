@@ -1,0 +1,45 @@
+[
+    {
+        "id": 0,
+        "name": "Pineaple",
+        "price": 100,
+        "url": "img/1.jpg",
+        "count": 544
+    },
+    {
+        "id": 1,
+        "name": "Banan",
+        "price": 20,
+        "url": "img/2.jpg ",
+        "count": 245
+    },
+    {
+        "id": 2,
+        "name": "Pamelo",
+        "price": 35,
+        "url": "img/3.jpg",
+        "count": 345
+    },
+    {
+        "id": 3,
+        "name": "Apple",
+        "price": 46,
+        "url": "img/4.jpg",
+        "count": 765
+    },
+    {
+        "id": 4,
+        "name": "Strawberry",
+        "price": 1000,
+        "url": "img/5.jpg",
+        "count": 355
+    },
+    {
+        "id": 5,
+        "name": "Orange",
+        "price": 500,
+        "url": "img/6.jpg",
+        "count": 357
+    }
+
+]
