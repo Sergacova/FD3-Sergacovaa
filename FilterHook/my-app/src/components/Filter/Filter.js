@@ -1,8 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import Controls from './Controls/Controls';
-import List from './List/List';
 import './Filter.css';
-import words from './words./wordsList.json';
+import words from './wordsList.json';
 
 const Filter = () => {
   const [isChecked, setIsChecked] = useState(false);
