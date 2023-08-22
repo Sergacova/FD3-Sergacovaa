@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Form from '../form/form.jsx';
+import Form from '../form/form.js';
 
 
 class Redaction extends React.Component {
