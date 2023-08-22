@@ -1,15 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import ShopComponent from './components/ShopComponent/ShopComponent';
 import './index.css';
-import App from './src/data/App.jsx';
 
-const productsArr = require('./src/data/products.json');
-const shopName = 'ISHOP3';
+import reportWebVitals from './reportWebVitals';
+let products = require('./products.json');
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <React.StrictMode>
-    <App shopName={shopName} productsArr={productsArr} />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <ShopComponent productsItems={products} />
+  </React.StrictMode>
 );
 
+reportWebVitals();
