@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import MobileCompany from './components/MobileCompany';
+import MobileCompany from './src/components/MobileCompany';
 
 let clientsArr=[ 
   {id:101, fam:"Иванов", im:"Иван", otch:"Иванович", balance:200}, 
