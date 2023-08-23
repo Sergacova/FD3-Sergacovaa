@@ -1,0 +1,22 @@
+﻿
+.Title{
+font-weight: bold;
+border-top: solid 1px grey;
+
+}
+
+.TableClients {
+  border-collapse: collapse;
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+.TableClients td {
+  border-bottom: solid 1px grey
+ }
+.MobileCompanyName {
+  margin-bottom: 25px;
+}
+
+.MobileCompanyName{
+  margin-top: 10px;
+}
