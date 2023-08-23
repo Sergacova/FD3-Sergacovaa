@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ProductComponent from ".src/components/ProductComponent/ProductComponent";
-import CardComponent from ".src/components/CardComponent/CardComponent";
-import HeaderComponent from ".src/components/HeaderComponent/HeaderComponent";
-import NewProduct from ".src/components/NewProduct/NewProduct";
+import ProductComponent from "../ProductComponent/ProductComponent";
+import CardComponent from "../CardComponent/CardComponent";
+import HeaderComponent from "../HeaderComponent/HeaderComponent";
+import NewProduct from "../NewProduct/NewProduct";
 import "./ShopComponent.css";
 
 class ShopComponent extends Component {
