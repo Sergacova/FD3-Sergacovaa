@@ -1,11 +1,11 @@
 {
-  "name": "votesblock",
+  "name": "rainbow",
   "version": "1.0.0",
-  "description": "блок голосования",
+  "description": "rainbow",
   "main": "App.js",
   "scripts": {
-    "build": ".\\node_modules\\.bin\\webpack",
-    "livebuild": ".\\node_modules\\.bin\\webpack-dev-server --progress --colors"
+    "build": "webpack",
+    "livebuild": "webpack-dev-server --progress --colors"
   },
   "author": "",
   "license": "ISC",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "prop-types": "^15.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
   }
 }

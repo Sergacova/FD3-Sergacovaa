@@ -1,12 +1,6 @@
-﻿"use strict";
+﻿import React from "react";
+import ReactDOM from "react-dom";
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import BlockComponent from "./components/BlockComponent";
 
-import Block from './components/Block';
-
-ReactDOM.render(
-  <Block />
-  , document.getElementById('container') 
-);
-
+ReactDOM.render(<BlockComponent />, document.getElementById("container"));
