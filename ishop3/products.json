@@ -1,0 +1,5 @@
+[ 
+    {"nam":"fruits", "code":1, "price":"1200", "url": "https://hips.hearstapps.com/hmg-prod/images/pattern-of-slices-citrus-fruit-of-lemons-oranges-royalty-free-image-1690494580.jpg?crop=0.668xw:1.00xh;0.189xw,0&resize=1120:*", "remainder":"10"}, 
+    {"nam":"vegetables", "code":2, "price":"900", "url": "https://www.vegetables.co.nz/assets/Vegetables-co-nz/Vegetables/artichoke-globe__FitMaxWzYxNSw2MTVd.jpg", "remainder":"5"}, 
+    {"nam":"bread", "code":3, "price":"1500", "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Korb_mit_Br%C3%B6tchen.JPG/375px-Korb_mit_Br%C3%B6tchen.JPG", "remainder":"14"} 
+]

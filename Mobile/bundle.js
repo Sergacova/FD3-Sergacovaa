@@ -1,36 +1,6 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// install a JSONP callback for chunk loading
-/******/ 	var parentJsonpFunction = window["webpackJsonp"];
-/******/ 	window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules, executeModules) {
-/******/ 		// add "moreModules" to the modules object,
-/******/ 		// then flag all "chunkIds" as loaded and fire callback
-/******/ 		var moduleId, chunkId, i = 0, resolves = [], result;
-/******/ 		for(;i < chunkIds.length; i++) {
-/******/ 			chunkId = chunkIds[i];
-/******/ 			if(installedChunks[chunkId]) {
-/******/ 				resolves.push(installedChunks[chunkId][0]);
-/******/ 			}
-/******/ 			installedChunks[chunkId] = 0;
-/******/ 		}
-/******/ 		for(moduleId in moreModules) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				modules[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if(parentJsonpFunction) parentJsonpFunction(chunkIds, moreModules, executeModules);
-/******/ 		while(resolves.length) {
-/******/ 			resolves.shift()();
-/******/ 		}
-/******/
-/******/ 	};
-/******/
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
-/******/ 	// objects to store loaded and loading chunks
-/******/ 	var installedChunks = {
-/******/ 		3: 0
-/******/ 	};
 /******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
@@ -56,55 +26,6 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
-/******/ 	// This file contains only the entry chunk.
-/******/ 	// The chunk loading function for additional chunks
-/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
-/******/ 		var installedChunkData = installedChunks[chunkId];
-/******/ 		if(installedChunkData === 0) {
-/******/ 			return new Promise(function(resolve) { resolve(); });
-/******/ 		}
-/******/
-/******/ 		// a Promise means "currently loading".
-/******/ 		if(installedChunkData) {
-/******/ 			return installedChunkData[2];
-/******/ 		}
-/******/
-/******/ 		// setup Promise in chunk cache
-/******/ 		var promise = new Promise(function(resolve, reject) {
-/******/ 			installedChunkData = installedChunks[chunkId] = [resolve, reject];
-/******/ 		});
-/******/ 		installedChunkData[2] = promise;
-/******/
-/******/ 		// start chunk loading
-/******/ 		var head = document.getElementsByTagName('head')[0];
-/******/ 		var script = document.createElement('script');
-/******/ 		script.type = "text/javascript";
-/******/ 		script.charset = 'utf-8';
-/******/ 		script.async = true;
-/******/ 		script.timeout = 120000;
-/******/
-/******/ 		if (__webpack_require__.nc) {
-/******/ 			script.setAttribute("nonce", __webpack_require__.nc);
-/******/ 		}
-/******/ 		script.src = __webpack_require__.p + "" + chunkId + ".bundle.js";
-/******/ 		var timeout = setTimeout(onScriptComplete, 120000);
-/******/ 		script.onerror = script.onload = onScriptComplete;
-/******/ 		function onScriptComplete() {
-/******/ 			// avoid mem leaks in IE.
-/******/ 			script.onerror = script.onload = null;
-/******/ 			clearTimeout(timeout);
-/******/ 			var chunk = installedChunks[chunkId];
-/******/ 			if(chunk !== 0) {
-/******/ 				if(chunk) {
-/******/ 					chunk[1](new Error('Loading chunk ' + chunkId + ' failed.'));
-/******/ 				}
-/******/ 				installedChunks[chunkId] = undefined;
-/******/ 			}
-/******/ 		};
-/******/ 		head.appendChild(script);
-/******/
-/******/ 		return promise;
-/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -138,11 +59,8 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	// on error function for async loading
-/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
-/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -343,9 +261,9 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(9);
-} else {
   module.exports = __webpack_require__(10);
+} else {
+  module.exports = __webpack_require__(11);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -451,6 +369,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -458,45 +377,106 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
  * LICENSE file in the root directory of this source tree.
  */
 
-if (process.env.NODE_ENV !== 'production') {
-  var ReactIs = __webpack_require__(7);
 
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(26)(ReactIs.isElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(28)();
+
+var printWarning = function() {};
+
+if (process.env.NODE_ENV !== 'production') {
+  var ReactPropTypesSecret = __webpack_require__(4);
+  var loggedTypeFailures = {};
+  var has = Function.call.bind(Object.prototype.hasOwnProperty);
+
+  printWarning = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
 }
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (process.env.NODE_ENV !== 'production') {
+    for (var typeSpecName in typeSpecs) {
+      if (has(typeSpecs, typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          if (typeof typeSpecs[typeSpecName] !== 'function') {
+            var err = Error(
+              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
+              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.'
+            );
+            err.name = 'Invariant Violation';
+            throw err;
+          }
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        if (error && !(error instanceof Error)) {
+          printWarning(
+            (componentName || 'React class') + ': type specification of ' +
+            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
+            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
+            'You may have forgotten to pass an argument to the type checker ' +
+            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
+            'shape all require an argument).'
+          );
+        }
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          printWarning(
+            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
+          );
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Resets warning cache when testing.
+ *
+ * @private
+ */
+checkPropTypes.resetWarningCache = function() {
+  if (process.env.NODE_ENV !== 'production') {
+    loggedTypeFailures = {};
+  }
+}
+
+module.exports = checkPropTypes;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.mobileEvents = undefined;
-
-var _events = __webpack_require__(29);
-
-var mobileEvents = new _events.EventEmitter();
-// в потоке voteEvents будут все события, связанные с голосованием
-// событие "EAnswerClicked" - кликнут вариант ответа, его сэмиттирует VotesAnswer и примет VotesBlock
-// событие "EFreeAnswerTextChanged" - изменён текст свободного ответа, его сэмиттирует VotesAnswer и примет VotesBlock
-// лучше работать не с текстовыми литералами, а объявить переменные с соответствующими значениями
-
-exports.mobileEvents = mobileEvents;
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -515,19 +495,48 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (process.env.NODE_ENV !== 'production') {
+  var ReactIs = __webpack_require__(8);
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(23)(ReactIs.isElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(24)();
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(15);
-} else {
-  module.exports = __webpack_require__(16);
-}
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.voteEvents = undefined;
+
+var _events = __webpack_require__(27);
+
+var voteEvents = new _events.EventEmitter();
+
+exports.voteEvents = voteEvents;
 
 /***/ }),
 /* 7 */
@@ -537,9 +546,9 @@ if (process.env.NODE_ENV === 'production') {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(24);
+  module.exports = __webpack_require__(14);
 } else {
-  module.exports = __webpack_require__(25);
+  module.exports = __webpack_require__(15);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -549,36 +558,49 @@ if (process.env.NODE_ENV === 'production') {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
 
+if (process.env.NODE_ENV === 'production') {
+  module.exports = __webpack_require__(21);
+} else {
+  module.exports = __webpack_require__(22);
+}
 
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(13);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _MobileCompany = __webpack_require__(23);
-
-var _MobileCompany2 = _interopRequireDefault(_MobileCompany);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var companyName = 'A1';
-var clientsArr = [{ id: 101, FIO: { fam: "Иванов", im: "Иван", otch: "Иванович" }, balance: 200 }, { id: 105, FIO: { fam: "Сидоров", im: "Сидор", otch: "Сидорович" }, balance: 250 }, { id: 110, FIO: { fam: "Петров", im: "Пётр", otch: "Петрович" }, balance: 180 }, { id: 120, FIO: { fam: "Григорьев", im: "Григорий", otch: "Григорьевич" }, balance: -220 }];
-
-_reactDom2.default.render(_react2.default.createElement(_MobileCompany2.default, {
-  name: companyName,
-  clients: clientsArr
-}), document.getElementById('container'));
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.14.0
+
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(12);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _MobileCompany = __webpack_require__(20);
+
+var _MobileCompany2 = _interopRequireDefault(_MobileCompany);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var clientsArr = [{ id: 101, fam: "Иванов", im: "Иван", otch: "Иванович", balance: 200 }, { id: 105, fam: "Сидоров", im: "Сидор", otch: "Сидорович", balance: 250 }, { id: 110, fam: "Петров", im: "Пётр", otch: "Петрович", balance: 180 }, { id: 120, fam: "Григорьев", im: "Григорий", otch: "Григорьевич", balance: -220 }];
+
+_reactDom2.default.render(_react2.default.createElement(_MobileCompany2.default, {
+  clients: clientsArr
+}), document.getElementById('container'));
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/** @license React v16.13.1
  * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -602,15 +624,15 @@ exports.Component=F;exports.Fragment=r;exports.Profiler=u;exports.PureComponent=
 exports.cloneElement=function(a,b,c){if(null===a||void 0===a)throw Error(C(267,a));var e=l({},a.props),d=a.key,g=a.ref,k=a._owner;if(null!=b){void 0!==b.ref&&(g=b.ref,k=J.current);void 0!==b.key&&(d=""+b.key);if(a.type&&a.type.defaultProps)var f=a.type.defaultProps;for(h in b)K.call(b,h)&&!L.hasOwnProperty(h)&&(e[h]=void 0===b[h]&&void 0!==f?f[h]:b[h])}var h=arguments.length-2;if(1===h)e.children=c;else if(1<h){f=Array(h);for(var m=0;m<h;m++)f[m]=arguments[m+2];e.children=f}return{$$typeof:p,type:a.type,
 key:d,ref:g,props:e,_owner:k}};exports.createContext=function(a,b){void 0===b&&(b=null);a={$$typeof:w,_calculateChangedBits:b,_currentValue:a,_currentValue2:a,_threadCount:0,Provider:null,Consumer:null};a.Provider={$$typeof:v,_context:a};return a.Consumer=a};exports.createElement=M;exports.createFactory=function(a){var b=M.bind(null,a);b.type=a;return b};exports.createRef=function(){return{current:null}};exports.forwardRef=function(a){return{$$typeof:x,render:a}};exports.isValidElement=O;
 exports.lazy=function(a){return{$$typeof:A,_ctor:a,_status:-1,_result:null}};exports.memo=function(a,b){return{$$typeof:z,type:a,compare:void 0===b?null:b}};exports.useCallback=function(a,b){return Z().useCallback(a,b)};exports.useContext=function(a,b){return Z().useContext(a,b)};exports.useDebugValue=function(){};exports.useEffect=function(a,b){return Z().useEffect(a,b)};exports.useImperativeHandle=function(a,b,c){return Z().useImperativeHandle(a,b,c)};
-exports.useLayoutEffect=function(a,b){return Z().useLayoutEffect(a,b)};exports.useMemo=function(a,b){return Z().useMemo(a,b)};exports.useReducer=function(a,b,c){return Z().useReducer(a,b,c)};exports.useRef=function(a){return Z().useRef(a)};exports.useState=function(a){return Z().useState(a)};exports.version="16.14.0";
+exports.useLayoutEffect=function(a,b){return Z().useLayoutEffect(a,b)};exports.useMemo=function(a,b){return Z().useMemo(a,b)};exports.useReducer=function(a,b,c){return Z().useReducer(a,b,c)};exports.useRef=function(a){return Z().useRef(a)};exports.useState=function(a){return Z().useState(a)};exports.version="16.13.1";
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.14.0
+/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.13.1
  * react.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -628,9 +650,9 @@ if (process.env.NODE_ENV !== "production") {
 'use strict';
 
 var _assign = __webpack_require__(2);
-var checkPropTypes = __webpack_require__(11);
+var checkPropTypes = __webpack_require__(3);
 
-var ReactVersion = '16.14.0';
+var ReactVersion = '16.13.1';
 
 // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
 // nor polyfill, then a plain number is used for performance.
@@ -2526,136 +2548,7 @@ exports.version = ReactVersion;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var printWarning = function() {};
-
-if (process.env.NODE_ENV !== 'production') {
-  var ReactPropTypesSecret = __webpack_require__(12);
-  var loggedTypeFailures = {};
-  var has = Function.call.bind(Object.prototype.hasOwnProperty);
-
-  printWarning = function(text) {
-    var message = 'Warning: ' + text;
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (process.env.NODE_ENV !== 'production') {
-    for (var typeSpecName in typeSpecs) {
-      if (has(typeSpecs, typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          if (typeof typeSpecs[typeSpecName] !== 'function') {
-            var err = Error(
-              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
-              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.'
-            );
-            err.name = 'Invariant Violation';
-            throw err;
-          }
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        if (error && !(error instanceof Error)) {
-          printWarning(
-            (componentName || 'React class') + ': type specification of ' +
-            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
-            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
-            'You may have forgotten to pass an argument to the type checker ' +
-            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
-            'shape all require an argument).'
-          );
-        }
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          printWarning(
-            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
-          );
-        }
-      }
-    }
-  }
-}
-
-/**
- * Resets warning cache when testing.
- *
- * @private
- */
-checkPropTypes.resetWarningCache = function() {
-  if (process.env.NODE_ENV !== 'production') {
-    loggedTypeFailures = {};
-  }
-}
-
-module.exports = checkPropTypes;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
 /* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-module.exports = ReactPropTypesSecret;
-
-
-/***/ }),
-/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2693,19 +2586,19 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(14);
+  module.exports = __webpack_require__(13);
 } else {
-  module.exports = __webpack_require__(17);
+  module.exports = __webpack_require__(16);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.14.0
+/** @license React v16.13.1
  * react-dom.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -2717,7 +2610,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(1),n=__webpack_require__(2),r=__webpack_require__(6);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));
+var aa=__webpack_require__(1),n=__webpack_require__(2),r=__webpack_require__(7);function u(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}if(!aa)throw Error(u(227));
 function ba(a,b,c,d,e,f,g,h,k){var l=Array.prototype.slice.call(arguments,3);try{b.apply(c,l)}catch(m){this.onError(m)}}var da=!1,ea=null,fa=!1,ha=null,ia={onError:function(a){da=!0;ea=a}};function ja(a,b,c,d,e,f,g,h,k){da=!1;ea=null;ba.apply(ia,arguments)}function ka(a,b,c,d,e,f,g,h,k){ja.apply(this,arguments);if(da){if(da){var l=ea;da=!1;ea=null}else throw Error(u(198));fa||(fa=!0,ha=l)}}var la=null,ma=null,na=null;
 function oa(a,b,c){var d=a.type||"unknown-event";a.currentTarget=na(c);ka(d,b,void 0,a);a.currentTarget=null}var pa=null,qa={};
 function ra(){if(pa)for(var a in qa){var b=qa[a],c=pa.indexOf(a);if(!(-1<c))throw Error(u(96,a));if(!sa[c]){if(!b.extractEvents)throw Error(u(97,a));sa[c]=b;c=b.eventTypes;for(var d in c){var e=void 0;var f=c[d],g=b,h=d;if(ta.hasOwnProperty(h))throw Error(u(99,h));ta[h]=f;var k=f.phasedRegistrationNames;if(k){for(e in k)k.hasOwnProperty(e)&&ua(k[e],g,h);e=!0}else f.registrationName?(ua(f.registrationName,g,h),e=!0):e=!1;if(!e)throw Error(u(98,d,a));}}}}
@@ -2992,15 +2885,15 @@ function ik(a,b,c,d,e){var f=c._reactRootContainer;if(f){var g=f._internalRoot;i
 wc=function(a){if(13===a.tag){var b=hg(Gg(),150,100);Ig(a,b);ek(a,b)}};xc=function(a){13===a.tag&&(Ig(a,3),ek(a,3))};yc=function(a){if(13===a.tag){var b=Gg();b=Hg(b,a,null);Ig(a,b);ek(a,b)}};
 za=function(a,b,c){switch(b){case "input":Cb(a,c);b=c.name;if("radio"===c.type&&null!=b){for(c=a;c.parentNode;)c=c.parentNode;c=c.querySelectorAll("input[name="+JSON.stringify(""+b)+'][type="radio"]');for(b=0;b<c.length;b++){var d=c[b];if(d!==a&&d.form===a.form){var e=Qd(d);if(!e)throw Error(u(90));yb(d);Cb(d,e)}}}break;case "textarea":Kb(a,c);break;case "select":b=c.value,null!=b&&Hb(a,!!c.multiple,b,!1)}};Fa=Mj;
 Ga=function(a,b,c,d,e){var f=W;W|=4;try{return cg(98,a.bind(null,b,c,d,e))}finally{W=f,W===V&&gg()}};Ha=function(){(W&(1|fj|gj))===V&&(Lj(),Dj())};Ia=function(a,b){var c=W;W|=2;try{return a(b)}finally{W=c,W===V&&gg()}};function kk(a,b){var c=2<arguments.length&&void 0!==arguments[2]?arguments[2]:null;if(!gk(b))throw Error(u(200));return jk(a,b,null,c)}var lk={Events:[Nc,Pd,Qd,xa,ta,Xd,function(a){jc(a,Wd)},Da,Ea,id,mc,Dj,{current:!1}]};
-(function(a){var b=a.findFiberByHostInstance;return Yj(n({},a,{overrideHookState:null,overrideProps:null,setSuspenseHandler:null,scheduleUpdate:null,currentDispatcherRef:Wa.ReactCurrentDispatcher,findHostInstanceByFiber:function(a){a=hc(a);return null===a?null:a.stateNode},findFiberByHostInstance:function(a){return b?b(a):null},findHostInstancesForRefresh:null,scheduleRefresh:null,scheduleRoot:null,setRefreshHandler:null,getCurrentFiber:null}))})({findFiberByHostInstance:tc,bundleType:0,version:"16.14.0",
+(function(a){var b=a.findFiberByHostInstance;return Yj(n({},a,{overrideHookState:null,overrideProps:null,setSuspenseHandler:null,scheduleUpdate:null,currentDispatcherRef:Wa.ReactCurrentDispatcher,findHostInstanceByFiber:function(a){a=hc(a);return null===a?null:a.stateNode},findFiberByHostInstance:function(a){return b?b(a):null},findHostInstancesForRefresh:null,scheduleRefresh:null,scheduleRoot:null,setRefreshHandler:null,getCurrentFiber:null}))})({findFiberByHostInstance:tc,bundleType:0,version:"16.13.1",
 rendererPackageName:"react-dom"});exports.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED=lk;exports.createPortal=kk;exports.findDOMNode=function(a){if(null==a)return null;if(1===a.nodeType)return a;var b=a._reactInternalFiber;if(void 0===b){if("function"===typeof a.render)throw Error(u(188));throw Error(u(268,Object.keys(a)));}a=hc(b);a=null===a?null:a.stateNode;return a};
 exports.flushSync=function(a,b){if((W&(fj|gj))!==V)throw Error(u(187));var c=W;W|=1;try{return cg(99,a.bind(null,b))}finally{W=c,gg()}};exports.hydrate=function(a,b,c){if(!gk(b))throw Error(u(200));return ik(null,a,b,!0,c)};exports.render=function(a,b,c){if(!gk(b))throw Error(u(200));return ik(null,a,b,!1,c)};
 exports.unmountComponentAtNode=function(a){if(!gk(a))throw Error(u(40));return a._reactRootContainer?(Nj(function(){ik(null,null,a,!1,function(){a._reactRootContainer=null;a[Od]=null})}),!0):!1};exports.unstable_batchedUpdates=Mj;exports.unstable_createPortal=function(a,b){return kk(a,b,2<arguments.length&&void 0!==arguments[2]?arguments[2]:null)};
-exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!gk(c))throw Error(u(200));if(null==a||void 0===a._reactInternalFiber)throw Error(u(38));return ik(a,b,c,!1,d)};exports.version="16.14.0";
+exports.unstable_renderSubtreeIntoContainer=function(a,b,c,d){if(!gk(c))throw Error(u(200));if(null==a||void 0===a._reactInternalFiber)throw Error(u(38));return ik(a,b,c,!1,d)};exports.version="16.13.1";
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3028,7 +2921,7 @@ exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3894,11 +3787,11 @@ exports.unstable_wrapCallback = unstable_wrapCallback;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.14.0
+/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.13.1
  * react-dom.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -3917,9 +3810,9 @@ if (process.env.NODE_ENV !== "production") {
 
 var React = __webpack_require__(1);
 var _assign = __webpack_require__(2);
-var Scheduler = __webpack_require__(6);
-var checkPropTypes = __webpack_require__(18);
-var tracing = __webpack_require__(20);
+var Scheduler = __webpack_require__(7);
+var checkPropTypes = __webpack_require__(3);
+var tracing = __webpack_require__(17);
 
 var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED; // Prevent newer renderers from RTE when used with older react package versions.
 // Current owner and dispatcher used to share the same ref,
@@ -28468,7 +28361,7 @@ function injectIntoDevTools(devToolsConfig) {
     // Enables DevTools to append owner stacks to error messages in DEV mode.
     getCurrentFiber:  function () {
       return current;
-    }
+    } 
   }));
 }
 var IsSomeRendererActing$1 = ReactSharedInternals.IsSomeRendererActing;
@@ -28820,7 +28713,7 @@ implementation) {
   };
 }
 
-var ReactVersion = '16.14.0';
+var ReactVersion = '16.13.1';
 
 setAttemptUserBlockingHydration(attemptUserBlockingHydration$1);
 setAttemptContinuousHydration(attemptContinuousHydration$1);
@@ -28914,151 +28807,22 @@ exports.version = ReactVersion;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var printWarning = function() {};
-
-if (process.env.NODE_ENV !== 'production') {
-  var ReactPropTypesSecret = __webpack_require__(19);
-  var loggedTypeFailures = {};
-  var has = Function.call.bind(Object.prototype.hasOwnProperty);
-
-  printWarning = function(text) {
-    var message = 'Warning: ' + text;
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (process.env.NODE_ENV !== 'production') {
-    for (var typeSpecName in typeSpecs) {
-      if (has(typeSpecs, typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          if (typeof typeSpecs[typeSpecName] !== 'function') {
-            var err = Error(
-              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
-              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.'
-            );
-            err.name = 'Invariant Violation';
-            throw err;
-          }
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        if (error && !(error instanceof Error)) {
-          printWarning(
-            (componentName || 'React class') + ': type specification of ' +
-            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
-            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
-            'You may have forgotten to pass an argument to the type checker ' +
-            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
-            'shape all require an argument).'
-          );
-        }
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          printWarning(
-            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
-          );
-        }
-      }
-    }
-  }
-}
-
-/**
- * Resets warning cache when testing.
- *
- * @private
- */
-checkPropTypes.resetWarningCache = function() {
-  if (process.env.NODE_ENV !== 'production') {
-    loggedTypeFailures = {};
-  }
-}
-
-module.exports = checkPropTypes;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-module.exports = ReactPropTypesSecret;
-
-
-/***/ }),
-/* 20 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(21);
+  module.exports = __webpack_require__(18);
 } else {
-  module.exports = __webpack_require__(22);
+  module.exports = __webpack_require__(19);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 21 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29075,7 +28839,7 @@ var b=0;exports.__interactionsRef=null;exports.__subscriberRef=null;exports.unst
 
 
 /***/ }),
-/* 22 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29432,7 +29196,7 @@ exports.unstable_wrap = unstable_wrap;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 23 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29450,23 +29214,21 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
+var _propTypes = __webpack_require__(5);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _events = __webpack_require__(4);
-
-var _MobileClient = __webpack_require__(30);
+var _MobileClient = __webpack_require__(25);
 
 var _MobileClient2 = _interopRequireDefault(_MobileClient);
 
-var _MobileForm = __webpack_require__(31);
+var _NewAndEditClients = __webpack_require__(28);
 
-var _MobileForm2 = _interopRequireDefault(_MobileForm);
+var _NewAndEditClients2 = _interopRequireDefault(_NewAndEditClients);
 
-var _MobileFilter = __webpack_require__(32);
+__webpack_require__(30);
 
-var _MobileFilter2 = _interopRequireDefault(_MobileFilter);
+var _events = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29477,18 +29239,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-__webpack_require__.e/* import() */(1).then(__webpack_require__.bind(null, 35));
-
-var defaultClient = {
-  id: 1,
-  FIO: {
-    fam: '',
-    im: '',
-    otch: ''
-  },
-  balance: 0
-};
 
 var MobileCompany = function (_React$PureComponent) {
   _inherits(MobileCompany, _React$PureComponent);
@@ -29507,172 +29257,195 @@ var MobileCompany = function (_React$PureComponent) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MobileCompany.__proto__ || Object.getPrototypeOf(MobileCompany)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       name: _this.props.name,
       clients: _this.props.clients,
-      status: 0,
-      editClient: defaultClient,
-      isEditMode: false
-    }, _this.setName1 = function () {
-      _this.setState({ name: 'МТС' });
-    }, _this.setName2 = function () {
-      _this.setState({ name: 'A1' });
-    }, _this.newId = function () {
-      var clients = _this.state.clients;
-      var max = clients.reduce(function (acc, curr) {
-        return acc.id > curr.id ? acc.id : curr.id;
-      });
-      return max + 1;
+      clientsFilt: _this.props.clients,
+      workMode: 0, //0 - ничего не отображается, 1 - редактирование клиента, 2 - создание нового клиента
+      editClientId: 0
     }, _this.componentDidMount = function () {
-      _events.mobileEvents.addListener('EDelete', _this.delete);
-      _events.mobileEvents.addListener('EEdit', _this.edit);
-      _events.mobileEvents.addListener('ECreate', _this.create);
-      _events.mobileEvents.addListener('ESaveClient', _this.save);
-      _events.mobileEvents.addListener('ECancel', _this.cancel);
-
-      _events.mobileEvents.addListener('EFilterAll', _this.filterAll);
-      _events.mobileEvents.addListener('EFilterActive', _this.filterActive);
-      _events.mobileEvents.addListener('EFilterBlocked', _this.filterBlocked);
+      _events.voteEvents.addListener('EDeleteClicked', _this.clientDelete);
+      _events.voteEvents.addListener('EEditClicked', _this.clientEdit);
+      _events.voteEvents.addListener('ECansel', _this.cansel);
+      _events.voteEvents.addListener('ESaveNewClient', _this.saveNewClient);
+      _events.voteEvents.addListener('ESaveEditClient', _this.saveEditClient);
     }, _this.componentWillUnmount = function () {
-      _events.mobileEvents.removeListener('EDelete', _this.delete);
-      _events.mobileEvents.removeListener('EEdit', _this.edit);
-      _events.mobileEvents.removeListener('ECreate', _this.create);
-      _events.mobileEvents.removeListener('ESaveClient', _this.save);
-      _events.mobileEvents.removeListener('ECancel', _this.cancel);
+      _events.voteEvents.removeListener('EDeleteClicked', _this.clientDelete);
+      _events.voteEvents.removeListener('EEditClicked', _this.clientEdit);
+      _events.voteEvents.removeListener('ECansel', _this.cansel);
+      _events.voteEvents.removeListener('ESaveNewClient', _this.saveNewClient);
+      _events.voteEvents.removeListener('ESaveEditClient', _this.saveEditClient);
+    }, _this.clientDelete = function (delId) {
 
-      _events.mobileEvents.removeListener('EFilterAll', _this.filterAll);
-      _events.mobileEvents.removeListener('EFilterActive', _this.filterActive);
-      _events.mobileEvents.removeListener('EFilterBlocked', _this.filterBlocked);
-    }, _this.edit = function (client) {
-      _this.setState({
-        editClient: client,
-        isEditMode: true
-      });
-    }, _this.delete = function (id) {
-      var newclients = _this.state.clients.filter(function (client) {
-        return client.id !== id;
-      });
-      _this.setState({ clients: newclients });
-    }, _this.create = function () {
-      _this.setState({
-        editClient: defaultClient,
-        isEditMode: true
-      });
-    }, _this.cancel = function () {
-      _this.setState({
-        isEditMode: false
-      });
-    }, _this.save = function (client) {
-      _this.setState({ isEditMode: false });
-      var isOldClients = _this.state.clients.some(function (el) {
-        return el.id === client.id;
-      });
-
-      if (!isOldClients) {
-        _this.setState(function (prev) {
-          return { clients: [].concat(_toConsumableArray(prev.clients), [_extends({}, client, { id: _this.newId() })]) };
-        });
-      } else {
-        var newClientsArr = _this.state.clients.map(function (e) {
-          return e.id === client.id ? client : e;
-        });
-        _this.setState({ clients: [].concat(_toConsumableArray(newClientsArr)) });
+      if (_this.state.workMode == 0) {
+        var questionDelete = confirm("Вы хотите удалить клиента?");
+        if (questionDelete) {
+          var filteredClients = _this.state.clients.filter(function (c) {
+            return c.id != delId;
+          });
+          _this.setState({ clients: filteredClients });
+          _this.setState({ clientsFilt: filteredClients });
+        }
       }
-    }, _this.filterAll = function () {
-      return _this.setState({ status: 0 });
-    }, _this.filterActive = function () {
-      return _this.setState({ status: 1 });
-    }, _this.filterBlocked = function () {
-      return _this.setState({ status: 2 });
+
+      // let changed = false;
+      // let newClients = [...this.state.clients];     
+      //   var questionDelete = confirm("Вы хотите удалить клиента?");
+      //   if (questionDelete) {     
+      //      var deleteClientIndex = newClients.findIndex(c => c.id == delId);
+      //      newClients.splice(deleteClientIndex, 1);
+      //      changed = true;         
+      //   } 
+
+      //  if(changed){
+      //     this.setState({ clients: newClients });
+      //     this.setState({ clientsFilt: newClients });
+      //   }
+
+    }, _this.clientEdit = function (editC) {
+      _this.setState({ workMode: 1, editClientId: editC });
+    }, _this.cansel = function () {
+      _this.setState({ workMode: 0 });
+    }, _this.saveNewClient = function (newClient) {
+      var addNewClient = _this.state.clients.concat(newClient);
+      _this.setState({ workMode: 0, clients: addNewClient, clientsFilt: addNewClient });
+    }, _this.saveEditClient = function (editClient) {
+      var changed = false;
+      var newClients = [].concat(_toConsumableArray(_this.state.clients));
+      newClients.forEach(function (c, i) {
+        // if (( c.id==editClient.id && c.fam != editClient.fam ) || (c.id==editClient.id && c.im != editClient.im) || (c.id==editClient.id && c.otch != editClient.otch) || (c.id==editClient.id && c.balance != editClient.balance))  {
+        // ( c.id==editClient.id && ( c.fam != editClient.fam || c.im != editClient.im || client.otch != editClient.otch || c.balance != editClient.balance) )
+        if (c.id == editClient.id && c.fam != editClient.fam || c.id == editClient.id && c.im != editClient.im || c.id == editClient.id && c.otch != editClient.otch || c.id == editClient.id && c.balance != editClient.balance) {
+          var newClient = _extends({}, c);
+          newClient.fam = editClient.fam;
+          newClient.im = editClient.im;
+          newClient.otch = editClient.otch;
+          newClient.balance = editClient.balance;
+          newClients[i] = newClient;
+          changed = true;
+        }
+      });
+
+      if (changed) {
+        _this.setState({ clients: newClients, clientsFilt: newClients });
+      }
+
+      _this.setState({ workMode: 0 });
+    }, _this.showAllClients = function () {
+      _this.setState({ clientsFilt: _this.state.clients });
+    }, _this.showActiveClients = function () {
+      if (_this.state.workMode == 0) {
+        var filteredActiveClients = _this.state.clients.filter(function (c) {
+          return c.balance >= 0;
+        });
+        _this.setState({ clientsFilt: filteredActiveClients });
+      }
+    }, _this.showBlockedClients = function () {
+      if (_this.state.workMode == 0) {
+        var filteredBlockedClients = _this.state.clients.filter(function (c) {
+          return c.balance < 0;
+        });
+        _this.setState({ clientsFilt: filteredBlockedClients });
+      }
+    }, _this.addClient = function () {
+      _this.setState({ workMode: 2 });
+    }, _this.setBalance = function (clientId, newBalance) {
+      var changed = false;
+      var newClients = [].concat(_toConsumableArray(_this.state.clients));
+      newClients.forEach(function (c, i) {
+        if (c.id == clientId && c.balance != newBalance) {
+          var newClient = _extends({}, c);
+          newClient.balance = newBalance;
+          newClients[i] = newClient;
+          changed = true;
+        }
+      });
+      if (changed) _this.setState({ clients: newClients });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(MobileCompany, [{
     key: 'render',
     value: function render() {
-      var _this2 = this;
 
       console.log("MobileCompany render");
 
-      var filteredClients = this.state.clients.filter(function (client) {
-        switch (_this2.state.status) {
-          case 1:
-            return client.balance > 0;
-          case 2:
-            return client.balance < 0;
-          default:
-            return true;
-        }
-      });
+      var cardClient;
 
-      var clientsCode = filteredClients.map(function (client) {
-        return _react2.default.createElement(_MobileClient2.default, { key: client.id, client: client });
+      if (this.state.workMode == 1) {
+        var editClient = this.state.editClientId;
+        cardClient = _react2.default.createElement(_NewAndEditClients2.default, { key: editClient.id, client: editClient, workMode: 1 });
+      } else if (this.state.workMode == 2) {
+        var newId = this.state.clients[this.state.clients.length - 1].id + 1;
+        var FIO = { id: newId, fam: "", im: "", otch: "", balance: 0 };
+        cardClient = _react2.default.createElement(_NewAndEditClients2.default, { key: FIO.id, client: FIO, workMode: 2 });
+      } else {
+        cardClient = null;
+      }
+
+      var clientsCode = this.state.clientsFilt.map(function (client) {
+        return _react2.default.createElement(_MobileClient2.default, { key: client.id, FIO: client });
       });
 
       return _react2.default.createElement(
         'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          { className: 'MobileCompanyName' },
-          '\u041A\u043E\u043C\u043F\u0430\u043D\u0438\u044F \xAB',
-          this.state.name,
-          '\xBB'
-        ),
-        _react2.default.createElement(_MobileFilter2.default, null),
+        { className: 'MobileCompany' },
+        _react2.default.createElement('input', { type: 'button', className: 'Button', value: '\u0412\u0441\u0435', onClick: this.showAllClients }),
+        _react2.default.createElement('input', { type: 'button', className: 'Button', value: '\u0410\u043A\u0442\u0438\u0432\u043D\u044B\u0435', onClick: this.showActiveClients }),
+        _react2.default.createElement('input', { type: 'button', className: 'Button', value: '\u0417\u0430\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u044B\u0435', onClick: this.showBlockedClients }),
         _react2.default.createElement(
           'table',
           { className: 'MobileCompanyClients' },
           _react2.default.createElement(
-            'thead',
+            'tbody',
             null,
             _react2.default.createElement(
               'tr',
               null,
               _react2.default.createElement(
-                'td',
+                'th',
                 null,
                 '\u0424\u0430\u043C\u0438\u043B\u0438\u044F'
               ),
               _react2.default.createElement(
-                'td',
+                'th',
                 null,
                 '\u0418\u043C\u044F'
               ),
               _react2.default.createElement(
-                'td',
+                'th',
                 null,
                 '\u041E\u0442\u0447\u0435\u0441\u0442\u0432\u043E'
               ),
               _react2.default.createElement(
-                'td',
+                'th',
                 null,
                 '\u0411\u0430\u043B\u0430\u043D\u0441'
               ),
               _react2.default.createElement(
-                'td',
+                'th',
                 null,
                 '\u0421\u0442\u0430\u0442\u0443\u0441'
               ),
               _react2.default.createElement(
-                'td',
+                'th',
                 null,
                 '\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C'
               ),
               _react2.default.createElement(
-                'td',
+                'th',
                 null,
                 '\u0423\u0434\u0430\u043B\u0438\u0442\u044C'
               )
-            )
-          ),
-          _react2.default.createElement(
-            'tbody',
-            null,
+            ),
             clientsCode
           )
         ),
-        _react2.default.createElement(_MobileForm2.default, {
-          client: this.state.editClient,
-          isEditMode: this.state.isEditMode
-        })
+        _react2.default.createElement('input', { type: 'button', className: 'Button', value: '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u043B\u0438\u0435\u043D\u0442\u0430', onClick: this.addClient }),
+        _react2.default.createElement(
+          'div',
+          null,
+          ' ',
+          cardClient,
+          ' '
+        )
       );
     }
   }]);
@@ -29684,18 +29457,16 @@ MobileCompany.propTypes = {
   name: _propTypes2.default.string.isRequired,
   clients: _propTypes2.default.arrayOf(_propTypes2.default.shape({
     id: _propTypes2.default.number.isRequired,
-    FIO: _propTypes2.default.shape({
-      fam: _propTypes2.default.string.isRequired,
-      im: _propTypes2.default.string.isRequired,
-      otch: _propTypes2.default.string.isRequired
-    }),
+    fam: _propTypes2.default.string.isRequired,
+    im: _propTypes2.default.string.isRequired,
+    otch: _propTypes2.default.string.isRequired,
     balance: _propTypes2.default.number.isRequired
   }))
 };
 exports.default = MobileCompany;
 
 /***/ }),
-/* 24 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29717,7 +29488,7 @@ exports.isValidElementType=function(a){return"string"===typeof a||"function"===t
 
 
 /***/ }),
-/* 25 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29906,7 +29677,7 @@ exports.typeOf = typeOf;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 26 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29919,11 +29690,11 @@ exports.typeOf = typeOf;
 
 
 
-var ReactIs = __webpack_require__(7);
+var ReactIs = __webpack_require__(8);
 var assign = __webpack_require__(2);
 
-var ReactPropTypesSecret = __webpack_require__(5);
-var checkPropTypes = __webpack_require__(27);
+var ReactPropTypesSecret = __webpack_require__(4);
+var checkPropTypes = __webpack_require__(3);
 
 var has = Function.call.bind(Object.prototype.hasOwnProperty);
 var printWarning = function() {};
@@ -30505,117 +30276,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var printWarning = function() {};
-
-if (process.env.NODE_ENV !== 'production') {
-  var ReactPropTypesSecret = __webpack_require__(5);
-  var loggedTypeFailures = {};
-  var has = Function.call.bind(Object.prototype.hasOwnProperty);
-
-  printWarning = function(text) {
-    var message = 'Warning: ' + text;
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (process.env.NODE_ENV !== 'production') {
-    for (var typeSpecName in typeSpecs) {
-      if (has(typeSpecs, typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          if (typeof typeSpecs[typeSpecName] !== 'function') {
-            var err = Error(
-              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
-              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.'
-            );
-            err.name = 'Invariant Violation';
-            throw err;
-          }
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        if (error && !(error instanceof Error)) {
-          printWarning(
-            (componentName || 'React class') + ': type specification of ' +
-            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
-            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
-            'You may have forgotten to pass an argument to the type checker ' +
-            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
-            'shape all require an argument).'
-          );
-        }
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          printWarning(
-            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
-          );
-        }
-      }
-    }
-  }
-}
-
-/**
- * Resets warning cache when testing.
- *
- * @private
- */
-checkPropTypes.resetWarningCache = function() {
-  if (process.env.NODE_ENV !== 'production') {
-    loggedTypeFailures = {};
-  }
-}
-
-module.exports = checkPropTypes;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 28 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30628,7 +30289,7 @@ module.exports = checkPropTypes;
 
 
 
-var ReactPropTypesSecret = __webpack_require__(5);
+var ReactPropTypesSecret = __webpack_require__(4);
 
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
@@ -30686,7 +30347,142 @@ module.exports = function() {
 
 
 /***/ }),
-/* 29 */
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(5);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+__webpack_require__(26);
+
+var _events = __webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MobileClient = function (_React$PureComponent) {
+  _inherits(MobileClient, _React$PureComponent);
+
+  function MobileClient() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, MobileClient);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MobileClient.__proto__ || Object.getPrototypeOf(MobileClient)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      FIO: _this.props.FIO,
+      balance: _this.props.FIO.balance,
+      status: "active"
+    }, _this.componentWillReceiveProps = function (newProps) {
+      _this.setState({ FIO: newProps.FIO, balance: newProps.FIO.balance });
+    }, _this.clientDelete = function (EO) {
+      _events.voteEvents.emit('EDeleteClicked', _this.props.FIO.id);
+    }, _this.clientEdit = function (EO) {
+      _events.voteEvents.emit('EEditClicked', _this.props.FIO);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(MobileClient, [{
+    key: 'render',
+    value: function render() {
+
+      console.log("MobileClient id=" + this.props.FIO.id + " render");
+
+      return _react2.default.createElement(
+        'tr',
+        { className: 'MobileClient' },
+        _react2.default.createElement(
+          'td',
+          null,
+          this.state.FIO.fam
+        ),
+        _react2.default.createElement(
+          'td',
+          null,
+          this.state.FIO.im
+        ),
+        _react2.default.createElement(
+          'td',
+          null,
+          this.state.FIO.otch
+        ),
+        _react2.default.createElement(
+          'td',
+          null,
+          this.state.balance
+        ),
+        this.state.balance > 0 ? _react2.default.createElement(
+          'td',
+          { className: 'MobileClientBalanceActive' },
+          'active'
+        ) : _react2.default.createElement(
+          'td',
+          { className: 'MobileClientBalanceBlocked' },
+          'blocked'
+        ),
+        _react2.default.createElement(
+          'td',
+          null,
+          _react2.default.createElement('input', { type: 'button', value: '\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C', onClick: this.clientEdit })
+        ),
+        _react2.default.createElement(
+          'td',
+          null,
+          ' ',
+          _react2.default.createElement('input', { type: 'button', value: '\u0423\u0434\u0430\u043B\u0438\u0442\u044C', onClick: this.clientDelete })
+        )
+      );
+    }
+  }]);
+
+  return MobileClient;
+}(_react2.default.PureComponent);
+
+MobileClient.propTypes = {
+
+  FIO: _propTypes2.default.shape({
+    id: _propTypes2.default.number.isRequired,
+    fam: _propTypes2.default.string.isRequired,
+    im: _propTypes2.default.string.isRequired,
+    otch: _propTypes2.default.string.isRequired,
+    balance: _propTypes2.default.number.isRequired
+  })
+
+};
+exports.default = MobileClient;
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30746,7 +30542,6 @@ function EventEmitter() {
   EventEmitter.init.call(this);
 }
 module.exports = EventEmitter;
-module.exports.once = once;
 
 // Backwards-compat with node 0.10.x
 EventEmitter.EventEmitter = EventEmitter;
@@ -31138,59 +30933,9 @@ function unwrapListeners(arr) {
   return ret;
 }
 
-function once(emitter, name) {
-  return new Promise(function (resolve, reject) {
-    function errorListener(err) {
-      emitter.removeListener(name, resolver);
-      reject(err);
-    }
-
-    function resolver() {
-      if (typeof emitter.removeListener === 'function') {
-        emitter.removeListener('error', errorListener);
-      }
-      resolve([].slice.call(arguments));
-    };
-
-    eventTargetAgnosticAddListener(emitter, name, resolver, { once: true });
-    if (name !== 'error') {
-      addErrorHandlerIfEventEmitter(emitter, errorListener, { once: true });
-    }
-  });
-}
-
-function addErrorHandlerIfEventEmitter(emitter, handler, flags) {
-  if (typeof emitter.on === 'function') {
-    eventTargetAgnosticAddListener(emitter, 'error', handler, flags);
-  }
-}
-
-function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
-  if (typeof emitter.on === 'function') {
-    if (flags.once) {
-      emitter.once(name, listener);
-    } else {
-      emitter.on(name, listener);
-    }
-  } else if (typeof emitter.addEventListener === 'function') {
-    // EventTarget does not have `error` event semantics like Node
-    // EventEmitters, we do not listen for `error` events here.
-    emitter.addEventListener(name, function wrapListener(arg) {
-      // IE does not have builtin `{ once: true }` support so we
-      // have to do it manually.
-      if (flags.once) {
-        emitter.removeEventListener(name, wrapListener);
-      }
-      listener(arg);
-    });
-  } else {
-    throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof emitter);
-  }
-}
-
 
 /***/ }),
-/* 30 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -31200,19 +30945,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
+var _propTypes = __webpack_require__(5);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _events = __webpack_require__(4);
+__webpack_require__(29);
+
+var _events = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31222,346 +30967,218 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-__webpack_require__.e/* import() */(2).then(__webpack_require__.bind(null, 33));
+var NewAndEditClients = function (_React$PureComponent) {
+  _inherits(NewAndEditClients, _React$PureComponent);
 
-var MobileClient = function (_React$PureComponent) {
-  _inherits(MobileClient, _React$PureComponent);
-
-  function MobileClient() {
+  function NewAndEditClients() {
     var _ref;
 
     var _temp, _this, _ret;
 
-    _classCallCheck(this, MobileClient);
+    _classCallCheck(this, NewAndEditClients);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = MobileClient.__proto__ || Object.getPrototypeOf(MobileClient)).call.apply(_ref, [this].concat(args))), _this), _this.state = _extends({}, _this.props.client), _this.componentDidUpdate = function (prevProps) {
-      var isNewProps = _this.props.client.id !== prevProps.client.id || _this.props.client.balance !== prevProps.client.balance || _this.props.client.FIO.fam !== prevProps.client.FIO.fam || _this.props.client.FIO.im !== prevProps.client.FIO.im || _this.props.client.FIO.otch !== prevProps.client.FIO.otch;
-
-      if (isNewProps) {
-        _this.setState(_extends({}, _this.props.client, {
-          FIO: _extends({}, _this.props.client.FIO)
-        }));
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = NewAndEditClients.__proto__ || Object.getPrototypeOf(NewAndEditClients)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      stClient: _this.props.client,
+      newClient: null
+    }, _this.newFamRef = null, _this.newImRef = null, _this.newOtchRef = null, _this.newBalanceRef = null, _this.setNewFamRef = function (ref) {
+      _this.newFamRef = ref;
+    }, _this.setNewImRef = function (ref) {
+      _this.newImRef = ref;
+    }, _this.setNewOtchRef = function (ref) {
+      _this.newOtchRef = ref;
+    }, _this.setNewBalanceRef = function (ref) {
+      _this.newBalanceRef = ref;
+    }, _this.saveEditClient = function () {
+      if (_this.newFamRef && _this.newImRef && _this.newOtchRef && _this.newBalanceRef) {
+        var newFam = _this.newFamRef.value;
+        var newIm = _this.newImRef.value;
+        var newOtch = _this.newOtchRef.value;
+        var newBalance = Number(_this.newBalanceRef.value);
+        var editClient = { id: _this.props.client.id, fam: newFam, im: newIm, otch: newOtch, balance: newBalance };
+        _events.voteEvents.emit('ESaveEditClient', editClient);
       }
-    }, _this.delete = function (EO) {
-      _events.mobileEvents.emit('EDelete', _this.state.id);
-    }, _this.edit = function () {
-      _events.mobileEvents.emit('EEdit', _this.state);
+    }, _this.saveNewClient = function () {
+      if (_this.newFamRef && _this.newImRef && _this.newOtchRef && _this.newBalanceRef) {
+        // всегда проверяем - мало ли метод вызовется когда DOM-элемента уже нет или ещё нет?
+        var newFam = _this.newFamRef.value;
+        var newIm = _this.newImRef.value;
+        var newOtch = _this.newOtchRef.value;
+        var newBalance = Number(_this.newBalanceRef.value);
+        var newClient = { id: _this.props.client.id, fam: newFam, im: newIm, otch: newOtch, balance: newBalance };
+        _events.voteEvents.emit('ESaveNewClient', newClient);
+      }
+    }, _this.cansel = function () {
+      _events.voteEvents.emit('ECansel');
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
-  _createClass(MobileClient, [{
+  _createClass(NewAndEditClients, [{
     key: 'render',
     value: function render() {
 
-      console.log("MobileClient id=" + this.props.client.id + " render");
+      console.log("NewAndEditClients id=" + this.props.client.id + " render");
 
-      var isActive = this.state.balance > 0;
+      if (this.props.workMode == 1) {
 
-      return _react2.default.createElement(
-        'tr',
-        null,
-        _react2.default.createElement(
-          'td',
-          null,
-          this.state.FIO.fam
-        ),
-        _react2.default.createElement(
-          'td',
-          null,
-          this.state.FIO.im
-        ),
-        _react2.default.createElement(
-          'td',
-          null,
-          this.state.FIO.otch
-        ),
-        _react2.default.createElement(
-          'td',
-          null,
-          this.state.balance
-        ),
-        _react2.default.createElement(
-          'td',
-          { style: { backgroundColor: isActive ? 'chartreuse' : 'red' } },
-          isActive ? 'Active' : 'Blocked'
-        ),
-        _react2.default.createElement(
-          'td',
-          null,
+        return _react2.default.createElement(
+          'div',
+          { className: 'NewAndEditClients' },
           _react2.default.createElement(
-            'button',
-            { className: 'MobileClient-Edit', onClick: this.edit },
-            '\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u0442\u044C'
-          )
-        ),
-        _react2.default.createElement(
-          'td',
-          null,
+            'h2',
+            null,
+            '\u0420\u0435\u0434\u0430\u043A\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0434\u0430\u043D\u043D\u044B\u0445 \u043A\u043B\u0438\u0435\u043D\u0442\u0430'
+          ),
           _react2.default.createElement(
-            'button',
-            { className: 'MobileClient-Delete', onClick: this.delete },
-            '\u0423\u0434\u0430\u043B\u0438\u0442\u044C'
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'LableInput' },
+              'Id ',
+              this.props.client.id
+            )
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'LableInput' },
+              '\u0424\u0430\u043C\u0438\u043B\u0438\u044F'
+            ),
+            _react2.default.createElement('input', { type: 'text', defaultValue: this.props.client.fam, ref: this.setNewFamRef })
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'LableInput' },
+              '\u0418\u043C\u044F'
+            ),
+            _react2.default.createElement('input', { type: 'text', defaultValue: this.props.client.im, ref: this.setNewImRef })
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'LableInput' },
+              '\u041E\u0442\u0447\u0435\u0441\u0442\u0432\u043E'
+            ),
+            _react2.default.createElement('input', { type: 'text', defaultValue: this.props.client.otch, ref: this.setNewOtchRef })
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'LableInput' },
+              '\u0411\u0430\u043B\u0430\u043D\u0441'
+            ),
+            _react2.default.createElement('input', { type: 'text', defaultValue: this.props.client.balance, ref: this.setNewBalanceRef })
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'blockBtnNewEdit' },
+            _react2.default.createElement('input', { type: 'button', className: 'BtnNewEdit', onClick: this.saveEditClient, value: '\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C' }),
+            _react2.default.createElement('input', { type: 'button', className: 'BtnNewEdit', onClick: this.cansel, value: '\u041E\u0442\u043C\u0435\u043D\u0430' })
           )
-        )
-      );
+        );
+      } else if (this.props.workMode == 2) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'NewAndEditClients' },
+          _react2.default.createElement(
+            'h2',
+            null,
+            '\u0421\u043E\u0437\u0434\u0430\u043D\u0438\u0435 \u043D\u043E\u0432\u043E\u0433\u043E \u043A\u043B\u0438\u0435\u043D\u0442\u0430'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'LableInput' },
+              'Id ',
+              this.props.client.id
+            )
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'LableInput' },
+              '\u0424\u0430\u043C\u0438\u043B\u0438\u044F'
+            ),
+            _react2.default.createElement('input', { type: 'text', defaultValue: '\u0424\u0430\u043C\u0438\u043B\u0438\u044F \u043D\u043E\u0432\u043E\u0433\u043E \u043A\u043B\u0438\u0435\u043D\u0442\u0430', ref: this.setNewFamRef })
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'LableInput' },
+              '\u0418\u043C\u044F'
+            ),
+            _react2.default.createElement('input', { type: 'text', defaultValue: '\u0418\u043C\u044F \u043D\u043E\u0432\u043E\u0433\u043E \u043A\u043B\u0438\u0435\u043D\u0442\u0430', ref: this.setNewImRef })
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'LableInput' },
+              '\u041E\u0442\u0447\u0435\u0441\u0442\u0432\u043E'
+            ),
+            _react2.default.createElement('input', { type: 'text', defaultValue: '\u041E\u0442\u0447\u0435\u0441\u0442\u0432\u043E \u043D\u043E\u0432\u043E\u0433\u043E \u043A\u043B\u0438\u0435\u043D\u0442\u0430', ref: this.setNewOtchRef })
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'LableInput' },
+              '\u0411\u0430\u043B\u0430\u043D\u0441'
+            ),
+            _react2.default.createElement('input', { type: 'text', defaultValue: 0, ref: this.setNewBalanceRef })
+          ),
+          _react2.default.createElement(
+            'p',
+            { className: 'blockBtnNewEdit' },
+            _react2.default.createElement('input', { type: 'button', className: 'BtnNewEdit', onClick: this.saveNewClient, value: '\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C' }),
+            _react2.default.createElement('input', { type: 'button', className: 'BtnNewEdit', onClick: this.cansel, value: '\u041E\u0442\u043C\u0435\u043D\u0430' })
+          )
+        );
+      }
     }
   }]);
 
-  return MobileClient;
+  return NewAndEditClients;
 }(_react2.default.PureComponent);
 
-MobileClient.propTypes = {
-  client: _propTypes2.default.shape({
-    id: _propTypes2.default.number.isRequired,
-    FIO: _propTypes2.default.shape({
-      fam: _propTypes2.default.string.isRequired,
-      im: _propTypes2.default.string.isRequired,
-      otch: _propTypes2.default.string.isRequired
-    }),
-    balance: _propTypes2.default.number.isRequired
-  })
+NewAndEditClients.propTypes = {
+  client: _propTypes2.default.object.isRequired,
+  workMode: _propTypes2.default.number.isRequired
 };
-exports.default = MobileClient;
+exports.default = NewAndEditClients;
 
 /***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 29 */
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(3);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _events = __webpack_require__(4);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-__webpack_require__.e/* import() */(0).then(__webpack_require__.bind(null, 34));
-
-var MobileForm = function (_React$PureComponent) {
-    _inherits(MobileForm, _React$PureComponent);
-
-    function MobileForm(props) {
-        _classCallCheck(this, MobileForm);
-
-        var _this = _possibleConstructorReturn(this, (MobileForm.__proto__ || Object.getPrototypeOf(MobileForm)).call(this, props));
-
-        _this.save = function (EO) {
-            var elem = {
-                id: _this.props.client.id,
-                FIO: {
-                    fam: _this.famEl.current ? _this.famEl.current.value : _this.props.client.FIO.fam,
-                    im: _this.imEl.current ? _this.imEl.current.value : _this.props.client.FIO.im,
-                    otch: _this.otchEl.current ? _this.otchEl.current.value : _this.props.client.FIO.otch
-                },
-                balance: +_this.balanceEl.current ? +_this.balanceEl.current.value : _this.props.client.balance
-            };
-
-            _events.mobileEvents.emit('ESaveClient', elem);
-        };
-
-        _this.create = function () {
-            _events.mobileEvents.emit('ECreate');
-        };
-
-        _this.cancel = function () {
-            _events.mobileEvents.emit('ECancel');
-        };
-
-        _this.famEl = _react2.default.createRef();
-        _this.imEl = _react2.default.createRef();
-        _this.otchEl = _react2.default.createRef();
-        _this.balanceEl = _react2.default.createRef();
-        return _this;
-    }
-
-    _createClass(MobileForm, [{
-        key: 'render',
-        value: function render() {
-
-            console.log('MobileForm render');
-
-            if (this.props.isEditMode) {
-                return _react2.default.createElement(
-                    'div',
-                    { className: 'MobileForm' },
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        _react2.default.createElement(
-                            'span',
-                            null,
-                            '\u0424\u0430\u043C\u0438\u043B\u0438\u044F'
-                        ),
-                        _react2.default.createElement('input', { ref: this.famEl, type: 'text', defaultValue: this.props.client.FIO.fam })
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        _react2.default.createElement(
-                            'span',
-                            null,
-                            '\u0418\u043C\u044F'
-                        ),
-                        _react2.default.createElement('input', { ref: this.imEl, type: 'text', defaultValue: this.props.client.FIO.im })
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        _react2.default.createElement(
-                            'span',
-                            null,
-                            '\u041E\u0442\u0447\u0435\u0441\u0442\u0432\u043E'
-                        ),
-                        _react2.default.createElement('input', { ref: this.otchEl, type: 'text', defaultValue: this.props.client.FIO.otch })
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        null,
-                        _react2.default.createElement(
-                            'span',
-                            null,
-                            '\u0411\u0430\u043B\u0430\u043D\u0441'
-                        ),
-                        _react2.default.createElement('input', { ref: this.balanceEl, type: 'number', defaultValue: this.props.client.balance })
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { className: 'MobileForm-Save', onClick: this.save },
-                        '\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C'
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { className: 'MobileForm-Cancel', onClick: this.cancel },
-                        '\u041E\u0442\u043C\u0435\u043D\u0430'
-                    )
-                );
-            } else {
-                return _react2.default.createElement(
-                    'button',
-                    { className: 'MobileForm-Create', onClick: this.create },
-                    '\u0421\u043E\u0437\u0434\u0430\u0442\u044C'
-                );
-            }
-        }
-    }]);
-
-    return MobileForm;
-}(_react2.default.PureComponent);
-
-MobileForm.propTypes = {
-    client: _propTypes2.default.shape({
-        id: _propTypes2.default.number.isRequired,
-        FIO: _propTypes2.default.shape({
-            fam: _propTypes2.default.string.isRequired,
-            im: _propTypes2.default.string.isRequired,
-            otch: _propTypes2.default.string.isRequired
-        }),
-        balance: _propTypes2.default.number.isRequired
-    }),
-    isEditMode: _propTypes2.default.bool.isRequired
-};
-exports.default = MobileForm;
+// removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 30 */
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(3);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _events = __webpack_require__(4);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var MobileFilter = function (_React$PureComponent) {
-    _inherits(MobileFilter, _React$PureComponent);
-
-    function MobileFilter() {
-        _classCallCheck(this, MobileFilter);
-
-        return _possibleConstructorReturn(this, (MobileFilter.__proto__ || Object.getPrototypeOf(MobileFilter)).apply(this, arguments));
-    }
-
-    _createClass(MobileFilter, [{
-        key: 'render',
-        value: function render() {
-            console.log("MobileFilter render");
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'Filter' },
-                _react2.default.createElement(
-                    'button',
-                    { className: 'FilterAll', onClick: function onClick() {
-                            return _events.mobileEvents.emit('EFilterAll');
-                        } },
-                    '\u0412\u0441\u0435'
-                ),
-                _react2.default.createElement(
-                    'button',
-                    { className: 'FilterActive', onClick: function onClick() {
-                            return _events.mobileEvents.emit('EFilterActive');
-                        } },
-                    '\u0410\u043A\u0442\u0438\u0432\u043D\u044B\u0435'
-                ),
-                _react2.default.createElement(
-                    'button',
-                    { className: 'FilterBlocked', onClick: function onClick() {
-                            return _events.mobileEvents.emit('EFilterBlocked');
-                        } },
-                    '\u0417\u0430\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u044B\u0435'
-                )
-            );
-        }
-    }]);
-
-    return MobileFilter;
-}(_react2.default.PureComponent);
-
-exports.default = MobileFilter;
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

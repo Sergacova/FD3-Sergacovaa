@@ -1,67 +1,103 @@
-div.MobileClient {
+.MobileClient
+{
   padding: 2px 0;
 }
 
-span.MobileClientBalance {
+.MobileClientBalance
+{
   float: right;
-  width: 40px;
+  width: 30px;
   font-weight: bold;
   text-align: right;
 }
 
-span.MobileClientFIO {
+.MobileClientFIO
+{
   margin-right: 30px;
-}.MobileForm {
-    width: 400px;
-    position: relative;
+  /* width: 100px; */
 }
 
-
-.MobileForm span {
-    margin-right: 20px;
+.MobileClientBalanceActive{
+  background-color: rgb(21, 233, 32);
 }
 
-.MobileForm input {
-    width: 200px;
-    position: absolute;
-    right: 0;
-}.MobileCompany {
-  border: double gray 3px;
-  padding: 3px 7px;
-  background-color: lightyellow;
+.MobileClientBalanceBlocked{
+  background-color: red;
+}.NewAndEditClients {  
+  background-color: rgb(232, 238, 225);
+  border: solid grey 2px;
+  max-width: 450px;
+  margin: 35px auto;
+  padding: 10px 40px;
 }
 
-.MobileCompanyName {
-  font-weight: bold;
-}
-
-.MobileCompanyClients {
-  padding-top: 5px;
-  background-color: white;
-  border-spacing: 7px 11px;
-  padding: 10px;
-  border-collapse: separate;
-}
-
-.MobileCompanyClients tr {
-  font-weight: normal;
-  border: 2px solid #039;
-}
-
-.MobileCompanyClients td {
+.NewAndEditClients h2 {  
   text-align: center;
-  padding: 0 50px;
 }
 
-.Filter {
-  padding-top: 30px;
+.NewAndEditClients .LableInput {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  width: 100px;
+}
+.NewAndEditClients .blockBtnNewEdit {
+  display: flex;
+  justify-content: center;
 }
 
-.MobileCompanyClients thead{
-  background-color: rgb(220, 220, 245);
+.NewAndEditClients .BtnNewEdit { 
+  width: 130px;
 }
 
-.MobileCompanyClients tbody {
-  background-color: beige;
+
+.NewAndEditClients input {
+  margin: 0 10px;
+  width: 250px;
+}
+
+.NewAndEditClients .ValidMessage {
+  color: red;
+  font-size: 12px;
+  
+}
+
+
+
+
+
+
+
+
+.MobileCompany
+{
+  border: double gray 3px;
+  width: 800px;
+  padding: 3px 7px;
+  background-color: rgb(238, 238, 238);
+}
+
+.MobileCompanyClients
+{
+  margin: 20px 10px;
+  border-collapse: collapse;
+  padding-top: 5px;  
+}
+
+.MobileCompanyClients td, .MobileCompanyClients th 
+{
+  border: solid green 2px;
+  width: 120px;
+  height: 30px;
+  text-align: center;
+}
+
+.Button {
+  width: 140px;
+  margin: 10px;
+  padding: 5px 0;
+  background-color: rgb(180, 178, 178);
+  border: solid black 1px;
 }
 /*# sourceMappingURL=bundle.css.map*/

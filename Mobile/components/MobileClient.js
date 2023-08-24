@@ -3,57 +3,59 @@ import PropTypes from 'prop-types';
 
 import './MobileClient.css';
 
-import {clientsEvents} from './events';
+import {voteEvents} from './events';
 
 class MobileClient extends React.PureComponent {
 
   static propTypes = {
-    info:PropTypes.shape({
+    
+    FIO:PropTypes.shape({
       id: PropTypes.number.isRequired,
       fam: PropTypes.string.isRequired,
       im: PropTypes.string.isRequired,
-      otch:  PropTypes.string.isRequired,
+      otch: PropTypes.string.isRequired,
       balance: PropTypes.number.isRequired,
-      
     }),
-  
    
   };
 
   state = {
-    info: this.props.info,
-  }
-
-  deleteInfo = (EO) =>{
-    clientsEvents.emit('EDeleteInfo',this.state.info);    
-  }
-
-  editInfo = (EO) =>{
-    clientsEvents.emit('EEditInfo',this.state.info)
-  }
-
-  componentWillReceiveProps = (newProps) => {
-    this.setState({info:newProps.info});
+    FIO: this.props.FIO,
+    balance: this.props.FIO.balance,
+    status: "active",
   };
+
+  componentWillReceiveProps = (newProps) => {   
+    this.setState({FIO:newProps.FIO,balance:newProps.FIO.balance});
+  };
+
+  clientDelete = (EO) => {    
+    voteEvents.emit('EDeleteClicked',this.props.FIO.id);
+  }
+
+  clientEdit = (EO) => {    
+    voteEvents.emit('EEditClicked',this.props.FIO);
+  }
 
   render() {
 
-    console.log("MobileClient id="+this.state.info.id+" render");
-    let status=this.props.info.balance>=0?'active':'blocked'
+    console.log("MobileClient id="+this.props.FIO.id+" render");   
     
     return (
- 
-   
-        <tr>        
-        <td className='MobileClientFam' >{this.props.info.fam}</td>
-        <td className='MobileClientIm'>{this.props.info.im}</td>
-        <td className='MobileClientOtch'>{this.props.info.otch}</td>
-        <td className='MobileClientBalance'>{this.props.info.balance}</td>
-        <td className='MobileClientStatus' style={{backgroundColor: this.props.info.balance>=0?'green':'red'}}>{status}</td>          
-        <td className='MobileClientEdit'><input type='button'  value='Редактировать' onClick={this.editInfo}></input></td>
-        <td className='MobileClientDelete'><input type='button'  value='Удалить' onClick={this.deleteInfo}></input></td>
-        </tr>          
+      <tr className='MobileClient'>        
+        <td>{this.state.FIO.fam}</td>
+        <td>{this.state.FIO.im}</td>
+        <td>{this.state.FIO.otch}</td>
+        <td>{this.state.balance}</td>
+        {
+          (this.state.balance > 0)
+          ?<td className='MobileClientBalanceActive'>active</td>
+          :<td className='MobileClientBalanceBlocked'>blocked</td>
+        }       
+        <td><input type="button" value="Редактировать" onClick={this.clientEdit} /></td>
+        <td> <input type="button" value="Удалить"  onClick={this.clientDelete} /></td>
 
+      </tr>
     );
 
   }
@@ -61,4 +63,3 @@ class MobileClient extends React.PureComponent {
 }
 
 export default MobileClient;
-

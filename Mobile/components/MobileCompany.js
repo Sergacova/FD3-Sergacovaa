@@ -1,27 +1,23 @@
 ﻿import React from 'react';
-import PropTypes, { element } from 'prop-types';
+import PropTypes from 'prop-types';
 
 import MobileClient from './MobileClient';
-import EditInfo from './EditInfo';
-
-import {clientsEvents} from './events';
+import NewAndEditClients from './NewAndEditClients';
 
 import './MobileCompany.css';
- 
 
-
+import {voteEvents} from './events';
 
 class MobileCompany extends React.PureComponent {
 
   static propTypes = {
     name: PropTypes.string.isRequired,
-    editClient: PropTypes.array,
     clients:PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         fam: PropTypes.string.isRequired,
-        im:  PropTypes.string.isRequired,
-        otch:  PropTypes.string.isRequired,
+        im: PropTypes.string.isRequired,
+        otch: PropTypes.string.isRequired,
         balance: PropTypes.number.isRequired,
       })
     ),
@@ -30,132 +26,184 @@ class MobileCompany extends React.PureComponent {
   state = {
     name: this.props.name,
     clients: this.props.clients,
-    workMode: 0,
-    editClient: 0,
-    key: this.props.clients.length+1,
-   }
-
+    clientsFilt: this.props.clients,
+    workMode: 0, //0 - ничего не отображается, 1 - редактирование клиента, 2 - создание нового клиента
+    editClientId: 0,
+  };
   
-
   componentDidMount = () => {
-    clientsEvents.addListener('EDeleteInfo',this.deleteInfo);
-    clientsEvents.addListener('EEditInfo',this.editInfo);
-    clientsEvents.addListener('ESaveInfo',this.saveInfo);
-    clientsEvents.addListener('ECancelInfo',this.cancelInfo);
+    voteEvents.addListener('EDeleteClicked',this.clientDelete);
+    voteEvents.addListener('EEditClicked',this.clientEdit);
+    voteEvents.addListener('ECansel',this.cansel);
+    voteEvents.addListener('ESaveNewClient',this.saveNewClient);
+    voteEvents.addListener('ESaveEditClient',this.saveEditClient);
   };
 
   componentWillUnmount = () => {
-    clientsEvents.removeListener('EDeleteInfo',this.deleteInfo);
-    clientsEvents.removeListener('EEditInfo',this.editInfo);
-    clientsEvents.removeListener('ESaveInfo',this.saveInfo); 
-    clientsEvents.removeListener('ECancelInfo',this.cancelInfo);  
+    voteEvents.removeListener('EDeleteClicked',this.clientDelete);
+    voteEvents.removeListener('EEditClicked',this.clientEdit);
+    voteEvents.removeListener('ECansel',this.cansel);
+    voteEvents.removeListener('ESaveNewClient',this.saveNewClient);
+    voteEvents.removeListener('ESaveEditClient',this.saveEditClient);
   };
 
-  deleteInfo =(client)=>{
-    let NewState=this.state.clients.filter(i => i!=client)
-    this.setState({clients: NewState, workMode: 0})
-  };
+  clientDelete = (delId) => {
 
-  editInfo = (client)=>{    
-    this.setState({workMode:1, editClient:client, key:this.state.key+1,})
+    if(this.state.workMode == 0 ){    
+      var questionDelete = confirm("Вы хотите удалить клиента?");
+      if (questionDelete) {     
+         var filteredClients = this.state.clients.filter(c => c.id != delId);
+         this.setState({ clients: filteredClients });
+         this.setState({ clientsFilt: filteredClients });
+      }
+     }
+
+    // let changed = false;
+    // let newClients = [...this.state.clients];     
+    //   var questionDelete = confirm("Вы хотите удалить клиента?");
+    //   if (questionDelete) {     
+    //      var deleteClientIndex = newClients.findIndex(c => c.id == delId);
+    //      newClients.splice(deleteClientIndex, 1);
+    //      changed = true;         
+    //   } 
+
+    //  if(changed){
+    //     this.setState({ clients: newClients });
+    //     this.setState({ clientsFilt: newClients });
+    //   }
+
+
   }
 
-  saveInfo = (newCl) =>{
-    
-    let newArr=this.state.clients.slice()
-    if (this.state.workMode==1){
-      let index=this.state.clients.findIndex(clients=>clients.id===newCl.id)
-      newArr[index]=newCl
+  clientEdit = (editC) => {
+    this.setState( {workMode:1, editClientId:editC} );
+  }
+
+  cansel = () => {
+    this.setState( {workMode:0});
+  }
+
+  saveNewClient = (newClient) => {
+    var addNewClient = this.state.clients.concat(newClient);  
+    this.setState( {workMode:0, clients: addNewClient, clientsFilt: addNewClient,});
+  }
+
+  saveEditClient = (editClient) => {    
+    let changed=false;
+    let newClients=[...this.state.clients];   
+    newClients.forEach( (c,i) => {
+      // if (( c.id==editClient.id && c.fam != editClient.fam ) || (c.id==editClient.id && c.im != editClient.im) || (c.id==editClient.id && c.otch != editClient.otch) || (c.id==editClient.id && c.balance != editClient.balance))  {
+      // ( c.id==editClient.id && ( c.fam != editClient.fam || c.im != editClient.im || client.otch != editClient.otch || c.balance != editClient.balance) )
+        if (( c.id==editClient.id && c.fam != editClient.fam ) || (c.id==editClient.id && c.im != editClient.im) || (c.id==editClient.id && c.otch != editClient.otch) || (c.id==editClient.id && c.balance != editClient.balance))  {
+          let newClient={...c}; 
+          newClient.fam = editClient.fam;
+          newClient.im = editClient.im;
+          newClient.otch = editClient.otch;
+          newClient.balance = editClient.balance;          
+          newClients[i]=newClient;
+          changed=true;
+        }
+      } );
+
+      if ( changed ){
+          this.setState({clients:newClients, clientsFilt: newClients});
+      }
+   
+      this.setState({workMode:0});
+  }
+
+
+  showAllClients = () => {
+    this.setState({ clientsFilt: this.state.clients });
+  }
+
+  showActiveClients = () => {
+    if(this.state.workMode == 0 ){          
+         var filteredActiveClients = this.state.clients.filter(c => c.balance >=0);
+         this.setState({ clientsFilt: filteredActiveClients });
       
-   }
-   
-      if (this.state.workMode==2){
-       newArr.push(newCl)
-      } 
-   
-    this.setState({clients:newArr, workMode: 0, key:this.state.key+1})
+     }
   }
 
-  cancelInfo = () =>{
-    this.setState({workMode: 0, key: this.state.clients.length, })
+  showBlockedClients = () => {
+    if(this.state.workMode == 0 ){          
+      var filteredBlockedClients = this.state.clients.filter(c => c.balance < 0);
+      this.setState({ clientsFilt: filteredBlockedClients });   
+    }
   }
 
-  addClient = () =>{
-    let newClient={id:0, fam:"", im:"", otch:"", balance: 0, id:this.state.key}
-    this.setState ({workMode:2, key:this.state.key+1, editClient: newClient, })
+  addClient = () => {
+    this.setState( {workMode:2} );
   }
 
-
-  allClients = () => {
-    this.setState({clients:this.props.clients})
-  }
+  setBalance = (clientId,newBalance) => {
+    let changed=false;
+    let newClients=[...this.state.clients];
+    newClients.forEach( (c,i) => {
+      if ( c.id==clientId && c.balance!=newBalance ) {
+        let newClient={...c}; 
+        newClient.balance=newBalance;
+        newClients[i]=newClient;
+        changed=true;
+      }
+    } );
+    if ( changed )
+      this.setState({clients:newClients});
+  };
   
-  activeClients =()=>{
-    let newArr=this.props.clients.filter(i=>i.balance>0)   
-   this.setState({clients:newArr})
-
-  }
-
-
-  blockClients =()=>{
-    let newArr=this.props.clients.filter(i=>i.balance<0)   
-   this.setState({clients:newArr})
-  }
-
-
-  setName1 = () => {
-    this.setState({name:'МТС'});
-  };
-
-  setName2 = () => {
-    this.setState({name:'Velcom'});
-  };
   
   
   render() {
-  
+
     console.log("MobileCompany render");
 
-    var clientsCode=this.state.clients.map( i =>
-      <MobileClient key={i.id} info={i} />
+    var cardClient ;
+
+    if( this.state.workMode == 1) {  
+      let editClient = this.state.editClientId;          
+      cardClient = <NewAndEditClients key= {editClient.id} client = {editClient} workMode = {1} ></NewAndEditClients>
+    } else if ( this.state.workMode == 2) { 
+      let newId = this.state.clients[this.state.clients.length - 1].id+1;
+      let FIO={id:newId, fam:"",im:"",otch:"", balance: 0 };         
+      cardClient = <NewAndEditClients key= {FIO.id} client = {FIO} workMode = {2}></NewAndEditClients>
+    } else {
+      cardClient = null;
+    }
+
+
+    var clientsCode=this.state.clientsFilt.map( client => {        
+        return <MobileClient key={client.id}  FIO={client} />;
+      }
     );
 
-    
-    
-    
     return (
       <div className='MobileCompany'>
-        <input type="button" value="МТС" onClick={this.setName1} />
-        <input type="button" value="Velcom" onClick={this.setName2} />
-        <div className='MobileCompanyName'>Компания&#58; {this.state.name}</div>
-        <input type="button" value="Все"  onClick={this.allClients}/>
-        <input type="button" value="Активные" onClick={this.activeClients} />
-        <input type="button" value="Заблокированные"  onClick={this.blockClients}/>
+        <input type="button" className="Button" value="Все" onClick={this.showAllClients} />
+        <input type="button" className="Button" value="Активные" onClick={this.showActiveClients} />
+        <input type="button" className="Button" value="Заблокированные" onClick={this.showBlockedClients} />
 
-        <table className='TableClients'>
-          <tbody>
-            <tr className="Title">
-              <td>Фамилия</td>
-              <td>Имя</td>
-              <td>Отчество</td>
-              <td>Баланс</td>
-              <td>Статус</td>
-              <td>Редактировать</td>
-              <td>Удалить</td>                           
-            </tr>
-            {clientsCode}             
-          </tbody>           
+        <table className='MobileCompanyClients' >
+           <tbody>
+         <tr>
+           <th>Фамилия</th>
+           <th>Имя</th>
+           <th>Отчество</th>
+           <th>Баланс</th>
+           <th>Статус</th>
+           <th>Редактировать</th>
+           <th>Удалить</th>
+         </tr>         
+          {clientsCode}
+          </tbody>
         </table>
-        
-        <input type="button" value="Добавить клиента" onClick={this.addClient}/>
-        { (this.state.workMode!=0)&& (<EditInfo key={this.state.key} client={this.state.editClient}/>)}
-       </div>
+        <input type="button" className="Button" value="Добавить клиента" onClick={this.addClient} />
+        <div> {cardClient} </div>
+      </div>
     )
     ;
 
   }
 
-  
 }
 
 export default MobileCompany;

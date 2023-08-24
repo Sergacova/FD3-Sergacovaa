@@ -1,22 +1,30 @@
-﻿
-.Title{
-font-weight: bold;
-border-top: solid 1px grey;
-
+﻿.MobileCompany
+{
+  border: double gray 3px;
+  width: 800px;
+  padding: 3px 7px;
+  background-color: rgb(238, 238, 238);
 }
 
-.TableClients {
+.MobileCompanyClients
+{
+  margin: 20px 10px;
   border-collapse: collapse;
-  margin-bottom: 25px;
-  margin-top: 25px;
-}
-.TableClients td {
-  border-bottom: solid 1px grey
- }
-.MobileCompanyName {
-  margin-bottom: 25px;
+  padding-top: 5px;  
 }
 
-.MobileCompanyName{
-  margin-top: 10px;
+.MobileCompanyClients td, .MobileCompanyClients th 
+{
+  border: solid green 2px;
+  width: 120px;
+  height: 30px;
+  text-align: center;
+}
+
+.Button {
+  width: 140px;
+  margin: 10px;
+  padding: 5px 0;
+  background-color: rgb(180, 178, 178);
+  border: solid black 1px;
 }
