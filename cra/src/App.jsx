@@ -2,20 +2,22 @@ import React, {Component} from "react"
 import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";
 
 class App extends Component {
-  constructor (props){
-  super (props);
-  this.state = {
-    count: 0 ,
-    someKey: false,
+  state = {
+    count: 0
+  };
 
-
-   
-  }
-  }
 handleClick = () => {
-  this.setState({count: this.state.count +1})
+  this.setState ({count: this.state.count+1});
+  
+  console.log("from hadle click");
 }
-  render (){
+  //this.setState((prevState) => ({count: this.state.count +1}), () => {
+  // this.setState((prevState) => ({count: this.state.count +1})
+  // this.setState((prevState) => ({count: this.state.count +1})
+
+
+
+  render () {
 
   return (
     <div className="App">
@@ -25,5 +27,4 @@ handleClick = () => {
   );
 }
 }
-
 export default App;
