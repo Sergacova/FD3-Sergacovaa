@@ -87,4 +87,4 @@ class Search extends React.Component {
     }
 }
 
-export { Search };
+export {Search};
