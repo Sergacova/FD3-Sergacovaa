@@ -5,6 +5,8 @@ import {Footer} from "./layout/Footer"
 import { Main } from "./layout/Main";
 import { Movies } from "./components/Movies";
 import { Movie } from "./components/Movie";
+import { Preloader } from "./components/Preloader";
+import { Search } from "./components/Search";
 function App() {
   return (
     <>
@@ -15,6 +17,9 @@ function App() {
     <Footer />
     <Main />
     <Movies />
+    <Movie />
+    <Preloader />
+    <Search />
 
     </>
       
