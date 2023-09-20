@@ -32,7 +32,7 @@ class Main extends React.Component {
         const {movies} = this.state;
 
         
-    return <main className="container content">
+        return <main className="container content">
         <Search searchMovies={this.searchMovies} />
         {
             movies.length ? 
