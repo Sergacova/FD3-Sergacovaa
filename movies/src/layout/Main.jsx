@@ -20,13 +20,13 @@ class Main extends React.Component {
     }
     searchMovies = (str) => {
         fetch(
-            `http://www.omdbapi.com/?s=matrix&apikey=${str}&s=${str}${type !== 'all' ? `&type=${type}` : " "
+            `http://www.omdbapi.com/?s=matrix&apikey=${str}&s=${str}${type !== "all" ? `&type=${type}` : " "
         }`
     )
         .then(data => this.setState({movies: data.Search}))
     }
     searchMovies = (str) => {
-        fetch(`http://www.omdbapi.com/?apikey=76945206&s=${str}&s=${str}${type !== 'all' ? `&type=${type}` : " "
+        fetch(`http://www.omdbapi.com/?apikey=76945206&s=${str}&s=${str}${type !== "all" ? `&type=${type}` : " "
     }`
     )
         .then(response => response.json())
