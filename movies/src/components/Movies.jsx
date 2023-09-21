@@ -1,4 +1,4 @@
-import { Movie } from './Movie';
+import { Movie } from "./Movie";
 
 function Movies(props) {
     const { movies = [] } = props;

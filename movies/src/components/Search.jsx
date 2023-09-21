@@ -1,19 +1,20 @@
-import React from "react";
+import React from 'react';
 
 class Search extends React.Component {
     state = {
-        search: "",
-        type: "all",
+        search: '',
+        type: 'all',
     };
 
     handleKey = (event) => {
-        if (event.key === "Enter") {
+        if (event.key === 'Enter') {
             this.props.searchMovies(this.state.search, this.state.type);
         }
     };
 
     handleFilter = (event) => {
-        this.setState(() => ({ type: event.target.dataset.type }),
+        this.setState(
+            () => ({ type: event.target.dataset.type }),
             () => {
                 this.props.searchMovies(this.state.search, this.state.type);
             }
@@ -22,12 +23,12 @@ class Search extends React.Component {
 
     render() {
         return (
-            <div className="row">
-                <div className="input-field">
+            <div className='row'>
+                <div className='input-field'>
                     <input
-                        className="validate"
-                        placeholder="search"
-                        type="search"
+                        className='validate'
+                        placeholder='search'
+                        type='search'
                         value={this.state.search}
                         onChange={(e) =>
                             this.setState({ search: e.target.value })
@@ -35,7 +36,7 @@ class Search extends React.Component {
                         onKeyDown={this.handleKey}
                     />
                     <button
-                        className="btn search-btn"
+                        className='btn search-btn'
                         onClick={() =>
                             this.props.searchMovies(
                                 this.state.search,
@@ -49,34 +50,34 @@ class Search extends React.Component {
                 <div>
                     <label>
                         <input
-                            className="with-gap"
-                            name="type"
-                            type="radio"
-                            data-type="all"
+                            className='with-gap'
+                            name='type'
+                            type='radio'
+                            data-type='all'
                             onChange={this.handleFilter}
-                            checked={this.state.type === "all"}
+                            checked={this.state.type === 'all'}
                         />
                         <span>All</span>
                     </label>
                     <label>
                         <input
-                            className="with-gap"
-                            name="type"
-                            type="radio"
-                            data-type="movie"
+                            className='with-gap'
+                            name='type'
+                            type='radio'
+                            data-type='movie'
                             onChange={this.handleFilter}
-                            checked={this.state.type === "movie"}
+                            checked={this.state.type === 'movie'}
                         />
                         <span>Movies only</span>
                     </label>
                     <label>
                         <input
-                            className="with-gap"
-                            name="type"
-                            type="radio"
-                            data-type="series"
+                            className='with-gap'
+                            name='type'
+                            type='radio'
+                            data-type='series'
                             onChange={this.handleFilter}
-                            checked={this.state.type === "series"}
+                            checked={this.state.type === 'series'}
                         />
                         <span>Series Only</span>
                     </label>
@@ -86,4 +87,4 @@ class Search extends React.Component {
     }
 }
 
-export {Search};
+export { Search };
