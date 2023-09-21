@@ -15,12 +15,7 @@ class Main extends React.Component {
         .then(response => response.json())
         .then(data => this.setState({movies: data.Search}))
     }
-    componentDidMount (){
-        fetch("http://www.omdbapi.com/?apikey=76945206&s=game")
-        .then(response => response.json())
-        .then(data => this.setState({movies: data.Search}))
-    }
-    
+  
     searchMovies = (str, type = 'all') => {
         this.setState({ loading: true });
         fetch(
@@ -32,6 +27,8 @@ class Main extends React.Component {
             .then((data) =>
                 this.setState({ movies: data.Search, loading: false })
             )}     
+
+                    
     render() {
         const { movies, loading } = this.state;
 
